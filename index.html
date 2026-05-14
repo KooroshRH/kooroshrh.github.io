@@ -6,7 +6,7 @@
     <title>Koorosh Roohi</title>
     <meta
       name="description"
-      content="Koorosh Roohi — Ph.D. candidate in Biomedical Engineering at the University of Toronto. Research on multi-modal sensing, deep learning, and infection risk in healthcare."
+      content="Koorosh Roohi — Ph.D. student at the University of Toronto working on sensing, machine learning, and infection risk in healthcare environments."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,185 +19,163 @@
   <body>
     <div class="wrap">
       <header class="site">
-        <h1>Koorosh Roohi</h1>
-        <p class="title-line">
-          Ph.D. Candidate, Biomedical Engineering<br />
-          University of Toronto
-        </p>
-        <ul class="contact">
-          <li>
-            <a href="mailto:koorosh.roohi@mail.utoronto.ca">koorosh.roohi@mail.utoronto.ca</a>
-          </li>
-          <li><a href="https://github.com/kooroshrh">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/koorosh-roohi">LinkedIn</a></li>
-        </ul>
-        <a class="cv-pill" href="assets/cv.pdf">Curriculum vitæ (PDF)</a>
+        <div class="hero">
+          <!-- Replace assets/portrait.svg with your photograph (same filename, or change src + use jpg/png). -->
+          <figure class="hero-photo">
+            <img src="assets/portrait.svg" alt="Portrait of Koorosh Roohi" width="280" height="350" />
+          </figure>
+          <div class="hero-main">
+            <h1>Koorosh Roohi</h1>
+            <p class="tagline">Sensing, activity, and risk in everyday clinical spaces.</p>
+            <p class="title-line">
+              Ph.D. student, Biomedical Engineering<br />
+              University of Toronto
+            </p>
+            <ul class="contact">
+              <li>
+                <a href="mailto:koorosh.roohi@mail.utoronto.ca">koorosh.roohi@mail.utoronto.ca</a>
+              </li>
+              <li><a href="https://github.com/kooroshrh">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/koorosh-roohi">LinkedIn</a></li>
+            </ul>
+            <a class="cv-pill" href="assets/cv.pdf">Curriculum vitæ (PDF)</a>
+          </div>
+        </div>
       </header>
 
       <main>
         <section id="about" aria-labelledby="about-heading">
-          <h2 id="about-heading">About</h2>
+          <h2 id="about-heading">What I work on</h2>
           <p class="lede">
-            I work on <strong>infection risk estimation</strong> in healthcare settings using
-            <strong>multi-modal sensing</strong> and <strong>deep learning</strong>. My doctoral research,
-            supervised by
+            Hospitals are busy, messy, wonderfully human places — and they are also places where small lapses in
+            routine can carry outsized consequences. I am drawn to questions that sit at the boundary between
+            <strong>measurement</strong> and <strong>meaning</strong>: what can we responsibly infer about infection
+            exposure when people move, touch surfaces, and interact with equipment, and how should algorithms respect
+            the noise and dignity of real wards?
+          </p>
+          <p class="lede">
+            With
             <a href="https://rsi.utoronto.ca/faculty/atena-roshan-fekr">Prof.&nbsp;Roshan Fekr</a> and
             <a href="https://bme.utoronto.ca/faculty-research/core-faculty/alex-mihailidis/">Prof.&nbsp;Alex Mihailidis</a>,
-            develops methods to quantify exposure risk in real time by fusing modalities such as mmWave radar,
-            RGB-D, IMU, and BLE. I am also interested in robust activity recognition, indoor localization, and
-            systems that translate sensing into actionable clinical insight.
+            my thesis centers on <strong>multi-modal sensing</strong> (for example mmWave radar, RGB-D, IMU, and BLE)
+            and <strong>deep learning</strong> for real-time infection-risk estimation and caregiver activity
+            recognition. Alongside the Ph.D., I build applied AI systems in industry — a useful counterweight that
+            keeps me honest about latency, deployment, and what “works” actually means outside a notebook.
           </p>
         </section>
 
         <section id="publications" aria-labelledby="pub-heading">
-          <h2 id="pub-heading">Publications &amp; talks</h2>
+          <h2 id="pub-heading">Writing &amp; talks</h2>
+          <p class="lede section-kicker">
+            Peer-reviewed work and select presentations, each with a stable DOI link. Figures can sit alongside an
+            entry whenever you add a thumbnail — the template is in the source comment on the first item.
+          </p>
           <ol class="pub-list">
             <li>
-              <span class="tag">Journal</span>
-              <span class="venue"
-                >K.&nbsp;Roohi &amp; A.&nbsp;Roshan Fekr (2026). Comparative analysis of deep learning models for
-                real-time nursing activity recognition.</span>
-              <em>Machine Learning: Health</em> (IOP Publishing).
+              <article class="pub">
+                <!--
+                  Optional thumbnail (duplicate inside any <article class="pub">):
+                  <figure class="pub-thumb">
+                    <img src="assets/pubs/your-paper-slug.jpg" alt="" width="640" height="480" loading="lazy" decoding="async" />
+                  </figure>
+                -->
+                <div class="pub-body">
+                  <span class="tag">Journal</span>
+                  <p class="pub-title">
+                    Deep learning-based recognition of simulated nursing activities for infection risk assessment.
+                  </p>
+                  <p class="pub-venue">
+                    <em>Machine Learning: Health</em> (IOP Publishing), 2026.
+                  </p>
+                  <p class="pub-doi">
+                    <a href="https://doi.org/10.1088/3049-477X/ae382d">https://doi.org/10.1088/3049-477X/ae382d</a>
+                  </p>
+                </div>
+              </article>
             </li>
             <li>
-              <span class="tag">Journal</span>
-              <span class="venue"
-                >K.&nbsp;Roohi &amp; A.&nbsp;Roshan Fekr (2025). A comparative analysis of indoor localization
-                technologies: a review of literature.</span>
-              <em>Computer Networks</em> (Elsevier).
+              <article class="pub">
+                <div class="pub-body">
+                  <span class="tag">Journal</span>
+                  <p class="pub-title">
+                    A comparative analysis of indoor localization technologies: a review of the literature.
+                  </p>
+                  <p class="pub-venue"><em>Computer Networks</em> (Elsevier), 2025.</p>
+                  <p class="pub-doi">
+                    <a href="https://doi.org/10.1016/j.comnet.2025.111527"
+                      >https://doi.org/10.1016/j.comnet.2025.111527</a
+                    >
+                  </p>
+                </div>
+              </article>
             </li>
             <li>
-              <span class="tag">Journal</span>
-              <span class="venue"
-                >K.&nbsp;Roohi, A.&nbsp;Esmaeilzehi &amp; M.&nbsp;O.&nbsp;Ahmad (2025). FUVT: a deep few-shot
-                unsupervised learning-based video-to-video translation scheme using Kalman filtering and relativistic
-                GAN.</span>
-              <em>Signal, Image and Video Processing</em> (Springer).
+              <article class="pub">
+                <div class="pub-body">
+                  <span class="tag">Journal</span>
+                  <p class="pub-title">
+                    FUVT: a deep few-shot unsupervised learning-based video-to-video translation scheme using Kalman
+                    filtering and relativistic GAN.
+                  </p>
+                  <p class="pub-venue"><em>Signal, Image and Video Processing</em> (Springer), 2025.</p>
+                  <p class="pub-doi">
+                    <a href="https://doi.org/10.1007/s11760-025-03982-3"
+                      >https://doi.org/10.1007/s11760-025-03982-3</a
+                    >
+                  </p>
+                </div>
+              </article>
             </li>
             <li>
-              <span class="tag">Talk</span>
-              <span class="venue"
-                >K.&nbsp;Roohi &amp; A.&nbsp;Roshan Fekr (2025). Using mmWave radar and deep learning to classify
-                caregiver activities for infection prevention.</span>
-              Oral presentation, <em>IEEE EMBC</em>.
+              <article class="pub">
+                <div class="pub-body">
+                  <span class="tag">Talk</span>
+                  <p class="pub-title">
+                    Using mmWave radar and deep learning to classify caregiver activities for infection prevention.
+                  </p>
+                  <p class="pub-venue">Oral presentation, <em>IEEE EMBC</em>, 2025.</p>
+                  <p class="pub-doi">
+                    <a href="https://doi.org/10.1109/embc58623.2025.11254344"
+                      >https://doi.org/10.1109/embc58623.2025.11254344</a
+                    >
+                  </p>
+                </div>
+              </article>
             </li>
             <li>
-              <span class="tag">Under review</span>
-              <span class="venue"
-                >K.&nbsp;Roohi &amp; A.&nbsp;Roshan Fekr. Real-time caregiver activity recognition with potential for
-                infection prevention in hospitals.</span>
-              <em>Smart Health</em> (Elsevier).
+              <article class="pub">
+                <div class="pub-body">
+                  <span class="tag">Under review</span>
+                  <p class="pub-title">
+                    Real-time caregiver activity recognition with potential for infection prevention in hospitals.
+                  </p>
+                  <p class="pub-venue"><em>Smart Health</em> (Elsevier).</p>
+                  <p class="pub-doi"><span class="muted">DOI will be registered after acceptance.</span></p>
+                </div>
+              </article>
             </li>
           </ol>
         </section>
 
-        <section id="education" aria-labelledby="edu-heading">
-          <h2 id="edu-heading">Education</h2>
-          <ul class="timeline">
-            <li>
-              <span class="when">2023 — 2028 (exp.)</span>
-              <h3>University of Toronto</h3>
-              <p class="meta">Ph.D., Biomedical Engineering · GPA 4.0 / 4.0</p>
-              <p class="dissertation">
-                Dissertation: <em>Infection risk estimation via multi-modal sensing and deep learning in healthcare</em>
-              </p>
-            </li>
-            <li>
-              <span class="when">2018 — 2023</span>
-              <h3>Amirkabir University of Technology</h3>
-              <p class="meta">B.Sc., Computer Engineering (Tehran) · GPA 3.85 / 4.0</p>
-            </li>
-          </ul>
-        </section>
-
-        <section id="research" aria-labelledby="res-heading">
-          <h2 id="res-heading">Research</h2>
-          <ul class="timeline">
-            <li>
-              <span class="when">2023 — present</span>
-              <h3>Research Assistant · University of Toronto</h3>
-              <p class="meta">Supervisors: Prof.&nbsp;Roshan Fekr, Prof.&nbsp;Alex Mihailidis</p>
-              <ul class="detail">
-                <li>
-                  Deep learning for real-time <strong>infection exposure risk</strong> with indoor localization and
-                  activity recognition.
-                </li>
-                <li>
-                  Multi-modal fusion (mmWave, RGB-D, IMU, BLE) for environmental and motion-capture datasets and
-                  robust recognition.
-                </li>
-                <li>
-                  Fusion architectures improving mmWave-based activity recognition by roughly 5% over single-modality
-                  baselines.
-                </li>
-                <li>PyTorch models and real-time wireless processing pipelines for on-device sensing.</li>
-              </ul>
-            </li>
-            <li>
-              <span class="when">2021 — 2023</span>
-              <h3>Research Assistant · Amirkabir University of Technology</h3>
-              <p class="meta">Supervisor: Prof.&nbsp;Safabakhsh</p>
-              <ul class="detail">
-                <li>Gait-based person re-identification with deep CNNs and HPM; 86% accuracy on OUMVLP-Pose.</li>
-                <li>Triplet loss, YOLOv5, and DeepSORT for multi-object tracking in the wild.</li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-
-        <section id="teaching" aria-labelledby="teach-heading">
-          <h2 id="teach-heading">Teaching</h2>
-          <p class="lede">
-            <strong>University of Toronto</strong> — tutorial TA, Department of Computer Science: System Programming
-            (2025, 2026); Microprocessor Systems (2024); Software Design (2023, 2024, 2025).
+        <section class="glance" id="background" aria-labelledby="bg-heading">
+          <h2 id="bg-heading">Background — briefly</h2>
+          <h3>Education</h3>
+          <p>
+            Ph.D. in Biomedical Engineering at the University of Toronto (2023 onward; expected completion 2028),
+            dissertation on infection risk via multi-modal sensing and deep learning. B.Sc. in Computer Engineering from
+            Amirkabir University of Technology (Tehran Polytechnic), 2023.
           </p>
-          <p class="lede">
-            <strong>Amirkabir University of Technology</strong> — head TA, Computer Engineering: Principles of AI;
-            Programming Languages; Algorithm Design; Advanced Programming; Fundamentals of Programming Lab.
+          <h3>Teaching &amp; community</h3>
+          <p>
+            Tutorial teaching assistant in Computer Science at Toronto (systems, microprocessors, software design).
+            Previously head TA at Amirkabir across algorithms, AI, and programming courses. Occasional peer reviewer
+            for <em>Circuits, Systems, and Signal Processing</em>; recipient of the EPIC Doctoral Award (2025).
           </p>
-        </section>
-
-        <section id="honors" aria-labelledby="hon-heading">
-          <h2 id="hon-heading">Honors &amp; service</h2>
-          <ul class="compact-list">
-            <li>EPIC Doctoral Award ($10,000 CAD), Emerging and Pandemic Infections Consortium (2025).</li>
-            <li>Peer reviewer, <em>Circuits, Systems, and Signal Processing</em> (12 reviews).</li>
-            <li>Ranked 193rd among ~140,000 nationwide university entrance exam applicants (2018).</li>
-          </ul>
-        </section>
-
-        <section id="experience" aria-labelledby="exp-heading">
-          <h2 id="exp-heading">Selected professional experience</h2>
-          <ul class="timeline">
-            <li>
-              <span class="when">2023 — present</span>
-              <h3>AI Manager · Masterly Inc., Toronto</h3>
-              <ul class="detail">
-                <li>
-                  Led end-to-end development of AI products (forms, VLM-based video analysis, LLM financial tooling)
-                  on AWS (SageMaker, Bedrock, Lambda, EC2).
-                </li>
-                <li>Supervised a team of five developers; shipped production modules in PyTorch and .NET.</li>
-              </ul>
-            </li>
-            <li>
-              <span class="when">2022</span>
-              <h3>Computer Vision · Crouse Company R&amp;D, Tehran</h3>
-              <p class="meta">Part-time — display defect inspection (OpenCV, Isolation Forest, Tesseract).</p>
-            </li>
-            <li>
-              <span class="when">2019 — 2022</span>
-              <h3>Client Developer · Quiz of Kings Studio, Tehran</h3>
-              <p class="meta">Part-time — Unity; migration from Corona for a large-scale mobile title.</p>
-            </li>
-          </ul>
-        </section>
-
-        <section id="skills" aria-labelledby="skills-heading">
-          <h2 id="skills-heading">Technical focus</h2>
-          <p class="lede">
-            PyTorch · sensor fusion &amp; mmWave · 3D vision · VLMs &amp; multi-agent systems · MLOps (Docker, AWS) ·
-            Python · C# / .NET · real-time inference.
+          <h3>Beyond the lab</h3>
+          <p>
+            I lead applied AI work at Masterly in Toronto (products spanning document intelligence, video understanding,
+            and LLM-backed financial tooling, mostly on AWS). Earlier roles span computer-vision R&amp;D and shipped
+            game client work — details live in the PDF vitæ if you need the full chronology.
           </p>
         </section>
       </main>

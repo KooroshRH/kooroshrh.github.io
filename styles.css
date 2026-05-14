@@ -1,12 +1,12 @@
 :root {
-  --bg: #fafaf8;
+  --bg: #f7f6f3;
   --paper: #ffffff;
   --ink: #141414;
-  --ink-muted: #4a4a48;
-  --rule: #e6e4df;
+  --ink-muted: #4f4e4b;
+  --rule: #e1ddd6;
   --accent: #1a3652;
   --accent-hover: #0f2740;
-  --measure: 38rem;
+  --measure: 42rem;
 }
 
 *,
@@ -46,37 +46,72 @@ a:hover {
 .wrap {
   max-width: var(--measure);
   margin: 0 auto;
-  padding-top: 3.25rem;
+  padding-top: 2.75rem;
 }
 
 header.site {
-  margin-bottom: 2.75rem;
+  margin-bottom: 2.5rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--rule);
 }
 
-h1 {
+.hero {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 9.25rem) 1fr;
+  gap: 1.5rem 1.75rem;
+  align-items: start;
+}
+
+.hero-photo {
+  margin: 0;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-width: 9.25rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-main h1 {
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   font-weight: 500;
-  font-size: clamp(2.15rem, 5vw, 2.75rem);
-  line-height: 1.12;
+  font-size: clamp(2.05rem, 4.5vw, 2.65rem);
+  line-height: 1.1;
   letter-spacing: -0.02em;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.45rem;
   color: var(--ink);
 }
 
+.tagline {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.22rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink-muted);
+  margin: 0 0 0.85rem;
+  line-height: 1.35;
+}
+
 .title-line {
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   color: var(--ink-muted);
   font-weight: 450;
-  margin: 0 0 1.35rem;
+  margin: 0 0 1.1rem;
   line-height: 1.45;
 }
 
 .contact {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem 1.15rem;
+  gap: 0.5rem 1.05rem;
   font-size: 0.95rem;
   margin: 0;
   padding: 0;
@@ -89,7 +124,7 @@ h1 {
 
 .cv-pill {
   display: inline-block;
-  margin-top: 1.1rem;
+  margin-top: 0.85rem;
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0.04em;
@@ -117,8 +152,8 @@ section:last-of-type {
 h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 600;
-  font-size: 1.35rem;
-  margin: 0 0 1rem;
+  font-size: 1.32rem;
+  margin: 0 0 0.85rem;
   letter-spacing: 0.02em;
   color: var(--ink);
 }
@@ -133,10 +168,13 @@ h2 {
   margin-bottom: 0;
 }
 
-.dissertation {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--ink-muted);
+.section-kicker {
+  margin-top: -0.35rem;
+}
+
+.lede strong {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .pub-list {
@@ -145,34 +183,52 @@ h2 {
   list-style: decimal;
 }
 
-.pub-list li::marker {
+.pub-list > li {
+  margin-bottom: 1.65rem;
+  padding-left: 0.4rem;
+}
+
+.pub-list > li:last-child {
+  margin-bottom: 0;
+}
+
+.pub-list > li::marker {
   color: var(--ink-muted);
   font-weight: 500;
 }
 
-.pub-list li {
-  margin-bottom: 1.05rem;
-  padding-left: 0.35rem;
+.pub {
+  display: grid;
+  gap: 0.65rem 1rem;
+  align-items: start;
   font-size: 0.98rem;
   color: var(--ink-muted);
 }
 
-.timeline {
+.pub:has(.pub-thumb) {
+  grid-template-columns: minmax(5.25rem, 6.75rem) 1fr;
+}
+
+.pub-thumb {
   margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
-.pub-list li:last-child {
-  margin-bottom: 0;
+.pub-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--paper);
 }
 
-.pub-list .venue {
-  font-style: italic;
-  color: var(--ink-muted);
+.pub-body {
+  min-width: 0;
 }
 
-.pub-list .tag {
+.pub .tag {
   display: inline-block;
   font-size: 0.72rem;
   font-weight: 600;
@@ -183,71 +239,96 @@ h2 {
   vertical-align: middle;
 }
 
-.timeline li {
-  margin-bottom: 1.5rem;
-}
-
-.timeline li:last-child {
-  margin-bottom: 0;
-}
-
-.timeline .when {
-  float: right;
-  font-size: 0.88rem;
-  color: var(--ink-muted);
-  font-weight: 450;
-  margin-left: 1rem;
-}
-
-.timeline h3 {
+.pub-title {
+  margin: 0.15rem 0 0.35rem;
   font-size: 1rem;
   font-weight: 600;
-  margin: 0 0 0.25rem;
   color: var(--ink);
-  padding-right: 0;
+  line-height: 1.45;
 }
 
-.timeline .meta {
-  font-size: 0.92rem;
-  color: var(--ink-muted);
+.pub-venue {
   margin: 0 0 0.45rem;
-}
-
-.timeline ul.detail {
-  margin: 0.35rem 0 0;
-  padding-left: 1.15rem;
-  color: var(--ink-muted);
-  font-size: 0.94rem;
-}
-
-.timeline ul.detail li {
-  margin-bottom: 0.35rem;
-}
-
-.compact-list {
-  margin: 0;
-  padding-left: 1.15rem;
-  color: var(--ink-muted);
   font-size: 0.95rem;
 }
 
-.compact-list li {
-  margin-bottom: 0.4rem;
+.pub-doi {
+  margin: 0;
+  font-size: 0.88rem;
+  word-break: break-word;
+}
+
+.pub-doi a {
+  font-variant-numeric: tabular-nums;
+}
+
+.pub-doi .muted {
+  color: var(--ink-muted);
+}
+
+.glance {
+  border-top: 1px solid var(--rule);
+  padding-top: 1.75rem;
+}
+
+.glance h3 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 1.35rem 0 0.4rem;
+}
+
+.glance h3:first-child {
+  margin-top: 0;
+}
+
+.glance p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--ink-muted);
+  line-height: 1.55;
 }
 
 footer.site {
-  margin-top: 3rem;
+  margin-top: 2.75rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--rule);
   font-size: 0.85rem;
   color: var(--ink-muted);
 }
 
-@media (max-width: 520px) {
-  .timeline .when {
-    float: none;
-    display: block;
-    margin: 0.2rem 0 0.35rem;
+@media (max-width: 560px) {
+  .hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .hero-photo {
+    max-width: 10rem;
+  }
+
+  .hero-main {
+    width: 100%;
+  }
+
+  .contact {
+    justify-content: center;
+  }
+
+  .cv-pill {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pub:has(.pub-thumb) {
+    grid-template-columns: 1fr;
+  }
+
+  .pub-thumb {
+    max-width: 12rem;
   }
 }
 
@@ -260,5 +341,9 @@ footer.site {
 
   .cv-pill {
     display: none;
+  }
+
+  .hero {
+    grid-template-columns: 7rem 1fr;
   }
 }
