@@ -367,6 +367,65 @@ h2::before {
   color: var(--ink-muted);
 }
 
+.pub-authors {
+  margin: -0.1rem 0 0.45rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+.experience-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-list > li {
+  margin-bottom: 1.55rem;
+  padding-bottom: 1.45rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.experience-list > li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.exp-when {
+  float: right;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  margin-left: 1rem;
+}
+
+.exp-role {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+}
+
+.exp-meta {
+  margin: 0 0 0.45rem;
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+}
+
+.exp-bullets {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.94rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
+.exp-bullets li {
+  margin-bottom: 0.32rem;
+}
+
 .glance {
   border-top: 1px solid var(--rule);
   padding-top: 1.75rem;
@@ -462,6 +521,12 @@ footer.site {
 
   .pub-thumb {
     max-width: 12rem;
+  }
+
+  .exp-when {
+    float: none;
+    display: block;
+    margin: 0 0 0.35rem;
   }
 }
 
