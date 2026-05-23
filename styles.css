@@ -425,7 +425,7 @@ h2::before {
   gap: 0.5rem 1.25rem;
   padding: 0.85rem 0 0.85rem 0.65rem;
   border-bottom: 1px solid var(--rule);
-  border-left: 2px solid transparent;
+  border-left: 2px solid var(--news-edge-default);
   font-size: 0.97rem;
   color: var(--ink-muted);
 }
@@ -436,10 +436,6 @@ h2::before {
 
 .news-feed > li:has(.news-kind--award) {
   border-left-color: var(--news-edge-award);
-}
-
-.news-feed > li:not(:has(.news-kind--pending)):not(:has(.news-kind--award)) {
-  border-left-color: var(--news-edge-default);
 }
 
 .news-feed > li:last-child {
@@ -526,22 +522,6 @@ h2::before {
   color: var(--accent);
 }
 
-.news-thumb {
-  grid-column: 2;
-  margin: 0.5rem 0 0;
-}
-
-.news-thumb img {
-  display: block;
-  max-width: 10rem;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  background: var(--paper);
-}
-
 .experience-list {
   margin: 0;
   padding: 0;
@@ -594,6 +574,13 @@ h2::before {
   margin-bottom: 0.32rem;
 }
 
+.exp-desc {
+  margin: 0;
+  font-size: 0.94rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
 .glance {
   border-top: 1px solid var(--rule);
   padding-top: 1.75rem;
@@ -624,6 +611,109 @@ h2::before {
   font-size: 0.98rem;
   color: var(--ink-muted);
   line-height: 1.55;
+}
+
+.glance-subhead {
+  margin: 0.65rem 0 0.35rem;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+
+.glance-list {
+  margin: 0 0 0.15rem;
+  padding-left: 1.15rem;
+  font-size: 0.98rem;
+  color: var(--ink-muted);
+  line-height: 1.55;
+}
+
+.glance-list li {
+  margin-bottom: 0.35rem;
+}
+
+.glance-list li:last-child {
+  margin-bottom: 0;
+}
+
+.glance-list li::marker {
+  color: var(--accent-teal);
+}
+
+.course-code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.glance-edu li {
+  margin-bottom: 0.85rem;
+}
+
+.glance-edu .edu-degree {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.glance-edu .edu-institution {
+  color: color-mix(in srgb, var(--ink-muted) 72%, var(--ink) 28%);
+}
+
+.glance-edu .edu-period {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  letter-spacing: 0.03em;
+  color: color-mix(in srgb, var(--ink-muted) 88%, var(--accent-teal) 12%);
+}
+
+.glance-edu .edu-period::before {
+  content: "·";
+  margin: 0 0.35em;
+  color: var(--rule);
+}
+
+.glance-edu .edu-note::before {
+  content: "(";
+  color: var(--rule);
+}
+
+.glance-edu .edu-note::after {
+  content: ")";
+  color: var(--rule);
+}
+
+.glance-edu .edu-note {
+  font-size: 0.94em;
+  color: color-mix(in srgb, var(--ink-muted) 92%, var(--ink) 8%);
+}
+
+.glance-edu .edu-detail {
+  display: block;
+  margin-top: 0.4rem;
+  padding-left: 0.55rem;
+  border-left: 1px solid color-mix(in srgb, var(--rule) 75%, var(--accent-teal) 25%);
+  font-size: 0.94em;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--ink-muted) 96%, var(--ink) 4%);
+}
+
+.glance-edu .edu-label {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink-muted) 70%, var(--accent-teal) 30%);
+}
+
+.glance-edu .edu-label::after {
+  content: " —";
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--rule);
 }
 
 footer.site {
