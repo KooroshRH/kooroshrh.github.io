@@ -158,7 +158,6 @@ a:hover {
 
 header.site {
   margin-bottom: 2.45rem;
-  padding-right: 2.6rem;
   padding-bottom: 1.85rem;
   border-bottom: 1px solid var(--rule);
 }
@@ -365,7 +364,7 @@ section {
   margin-bottom: 2.35rem;
 }
 
-section:last-of-type {
+main section:last-of-type {
   margin-bottom: 0;
 }
 
@@ -772,6 +771,7 @@ footer.site {
   header.site {
     margin-bottom: 1.5rem;
     padding-bottom: 1.35rem;
+    padding-right: 2.6rem;
   }
 
   .sidebar #research {
@@ -812,9 +812,28 @@ footer.site {
   }
 }
 
+@media (max-width: 959px) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header.site {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .theme-toggle {
+    position: static;
+    align-self: flex-end;
+    flex-shrink: 0;
+    margin: 0 0 0.85rem;
+  }
+}
+
 @media (max-width: 560px) {
   .wrap {
-    padding-left: 0;
+    padding-inline: 0;
   }
 
   .hero {
