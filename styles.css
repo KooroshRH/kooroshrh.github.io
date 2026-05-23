@@ -15,6 +15,9 @@
   --ink-venue: #4a5f6e;
   --ink-authors: #6e6a62;
   --measure: 43rem;
+  --layout-max: 72rem;
+  --sidebar-width: 20rem;
+  --layout-gap: 3rem;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --gradient-accent: rgba(35, 64, 96, 0.055);
   --gradient-warm: rgba(110, 82, 55, 0.045);
@@ -120,22 +123,25 @@ a:hover {
 }
 
 .wrap {
+  position: relative;
   max-width: var(--measure);
   margin: 0 auto;
   padding: 2.65rem 0 0 0.35rem;
 }
 
-header.site {
+.page-layout {
+  display: block;
+}
+
+.sidebar {
   position: relative;
-  margin-bottom: 2.45rem;
-  padding-bottom: 1.85rem;
-  border-bottom: 1px solid var(--rule);
 }
 
 .theme-toggle {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,6 +154,13 @@ header.site {
   color: var(--ink-muted);
   cursor: pointer;
   font: inherit;
+}
+
+header.site {
+  margin-bottom: 2.45rem;
+  padding-right: 2.6rem;
+  padding-bottom: 1.85rem;
+  border-bottom: 1px solid var(--rule);
 }
 
 .theme-toggle:hover {
@@ -726,6 +739,79 @@ footer.site {
   color: var(--ink-faint);
 }
 
+@media (min-width: 960px) {
+  .wrap {
+    max-width: var(--layout-max);
+    padding-right: 0.35rem;
+  }
+
+  .page-layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+    gap: 0 var(--layout-gap);
+    align-items: start;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 1.25rem;
+    align-self: start;
+    max-height: calc(100vh - 2.5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  header.site {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.35rem;
+  }
+
+  .sidebar #research {
+    margin-bottom: 0;
+  }
+
+  .sidebar .lede,
+  .sidebar .interests {
+    font-size: 0.93rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .hero-photo {
+    max-width: 10.5rem;
+    margin-inline: auto;
+  }
+
+  .sidebar .hero-main h1 {
+    font-size: 2.1rem;
+  }
+
+  .tagline,
+  .title-line-detail {
+    max-width: none;
+  }
+
+  .content {
+    min-width: 0;
+  }
+
+  .news-feed > li {
+    grid-template-columns: 6rem 1fr;
+    gap: 0.5rem 1.35rem;
+  }
+}
+
 @media (max-width: 560px) {
   .wrap {
     padding-left: 0;
@@ -808,6 +894,20 @@ footer.site {
     background: #fff;
     padding: 0;
     font-size: 11pt;
+  }
+
+  .wrap {
+    max-width: none;
+  }
+
+  .page-layout {
+    display: block;
+  }
+
+  .sidebar {
+    position: static;
+    max-height: none;
+    overflow: visible;
   }
 
   .cv-pill {
