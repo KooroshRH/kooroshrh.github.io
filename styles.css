@@ -480,7 +480,13 @@ h2::before {
 }
 
 .news-line cite {
+  display: block;
+  margin: 0.3rem 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.06rem;
+  font-weight: 500;
   font-style: normal;
+  line-height: 1.38;
   color: var(--ink);
 }
 
@@ -490,7 +496,17 @@ h2::before {
 }
 
 .news-authors {
+  display: block;
+  margin: 0.35rem 0 0.15rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  line-height: 1.45;
   color: var(--ink-authors);
+}
+
+.news-author-self {
+  color: var(--accent-teal);
+  font-weight: inherit;
 }
 
 .news-line a {
