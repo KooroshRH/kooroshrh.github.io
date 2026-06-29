@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kooroshrh.github.io/sitemap.xml
