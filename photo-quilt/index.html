@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhotoQuilt — Training-Free Arbitrary-Resolution Photomosaics via Bootstrapped Tiled Denoising</title>
+    <meta
+      name="description"
+      content="PhotoQuilt: a training-free framework for generating photomosaics at arbitrary resolution via bootstrapped tiled denoising."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:wght@700&family=Source+Sans+3:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="assets/teaser-preview.jpg" fetchpriority="high" />
+  </head>
+  <body>
+    <div class="mosaic-bg" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="tileGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+            <rect width="28" height="28" fill="#101014" />
+            <rect x="1" y="1" width="10" height="10" fill="#c1440e" opacity="0.07" rx="0.5" />
+            <rect x="14" y="2" width="11" height="9" fill="#4a7c9e" opacity="0.06" rx="0.5" />
+            <rect x="3" y="15" width="9" height="11" fill="#d4a830" opacity="0.055" rx="0.5" />
+            <rect x="15" y="14" width="10" height="10" fill="#7a9a6a" opacity="0.05" rx="0.5" />
+            <rect x="8" y="8" width="7" height="7" fill="#a88aac" opacity="0.045" rx="0.5" />
+          </pattern>
+          <radialGradient id="pageWash" cx="50%" cy="18%" r="75%">
+            <stop offset="0%" stop-color="#1a1a24" stop-opacity="0.55" />
+            <stop offset="45%" stop-color="#101014" stop-opacity="0.2" />
+            <stop offset="100%" stop-color="#101014" stop-opacity="0.95" />
+          </radialGradient>
+          <radialGradient id="warmGlow" cx="82%" cy="88%" r="45%">
+            <stop offset="0%" stop-color="#c1440e" stop-opacity="0.07" />
+            <stop offset="100%" stop-color="#101014" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#tileGrid)" />
+        <rect width="100%" height="100%" fill="url(#warmGlow)" />
+        <rect width="100%" height="100%" class="wash" />
+      </svg>
+    </div>
+
+    <main class="page">
+
+      <header class="title-header">
+        <div class="scene">
+          <svg id="main" width="760" height="170" viewBox="0 0 760 170" role="img" aria-label="PhotoQuilt">
+            <defs>
+              <clipPath id="qGlyphClip" clipPathUnits="userSpaceOnUse">
+                <path
+                  fill-rule="evenodd"
+                  d="
+      M492.02 156.34Q487.34 156.34 483.89 156.01Q480.45 155.69 477.26 154.19
+      Q474.08 152.70 470.05 149.06Q464.20 143.73 460.24 139.44
+      Q456.27 135.15 452.89 132.62Q449.51 130.08 445.35 130.08
+      Q433.26 129.82 424.62 125.59Q415.97 121.37 410.51 114.48
+      Q405.05 107.59 402.51 99.20Q399.98 90.82 399.98 82.50
+      Q399.98 74.31 402.71 65.92Q405.44 57.54 411.10 50.52
+      Q416.75 43.50 425.26 39.21Q433.78 34.92 445.22 34.92
+      Q457.18 34.92 465.89 39.21Q474.60 43.50 480.25 50.59
+      Q485.91 57.67 488.70 65.99Q491.50 74.31 491.50 82.50
+      Q491.50 89.65 489.36 97.00Q487.21 104.34 482.92 110.91
+      Q478.63 117.47 472.13 122.22Q465.63 126.96 456.79 128.91
+      Q460.04 128.91 462.84 129.50Q465.63 130.08 468.62 131.84
+      Q471.61 133.59 475.38 137.23Q479.93 141.39 483.05 144.25
+      Q486.17 147.11 488.38 148.80Q490.59 150.49 492.41 151.27
+      Q494.23 152.05 496.18 152.05 L496.18 156.34 Z
+      M446.52 124.75Q454.58 124.75 460.56 121.31
+      Q466.54 117.86 470.50 112.07Q474.47 106.29 476.49 99.20
+      Q478.50 92.12 478.50 84.97Q478.50 76.91 476.29 68.98
+      Q474.08 61.05 469.79 54.55Q465.50 48.05 459.19 44.08
+      Q452.89 40.12 444.83 40.12Q436.77 40.12 430.73 43.63
+      Q424.68 47.14 420.72 52.92Q416.75 58.71 414.74 65.79
+      Q412.72 72.88 412.72 80.16Q412.72 87.31 414.74 95.11
+      Q416.75 102.91 420.91 109.67Q425.07 116.43 431.44 120.59
+      Q437.81 124.75 446.52 124.75 Z"
+                />
+              </clipPath>
+              <clipPath id="lensClip" clipPathUnits="userSpaceOnUse">
+                <circle id="lensCircleClip" cx="0" cy="0" r="36" />
+              </clipPath>
+              <mask id="qPlainMask" maskUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="760" height="170" fill="white" />
+                <circle id="lensMaskCircle" cx="418" cy="52" r="0" fill="black" />
+              </mask>
+              <radialGradient id="lensGrad" cx="33%" cy="28%" r="68%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12" />
+                <stop offset="55%" stop-color="#aaccee" stop-opacity="0.04" />
+                <stop offset="100%" stop-color="#1050a0" stop-opacity="0.1" />
+              </radialGradient>
+              <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#dde6f6" />
+                <stop offset="45%" stop-color="#8898bc" />
+                <stop offset="100%" stop-color="#ccd8ec" />
+              </linearGradient>
+              <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ccd4e0" />
+                <stop offset="100%" stop-color="#566070" />
+              </linearGradient>
+              <radialGradient id="vigGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="58%" stop-color="#000" stop-opacity="0" />
+                <stop offset="100%" stop-color="#000" stop-opacity="0.3" />
+              </radialGradient>
+            </defs>
+            <text x="30" y="128" id="tPhoto" font-family="Lora,Georgia,serif" font-size="130" font-weight="700" fill="#e8e2d8" opacity="0">Photo</text>
+            <text x="394" y="128" id="tQ" mask="url(#qPlainMask)" font-family="Lora,Georgia,serif" font-size="130" font-weight="700" fill="#e8e2d8" opacity="0">Q</text>
+            <text x="492" y="128" id="tUilt" font-family="Lora,Georgia,serif" font-size="130" font-weight="700" fill="#e8e2d8" opacity="0">uilt</text>
+            <g id="lensRig" transform="translate(418, 52)">
+              <g clip-path="url(#lensClip)" id="lensMosaic" opacity="0">
+                <g id="mosaicOffset" transform="translate(-418, -52)">
+                  <g clip-path="url(#qGlyphClip)">
+                    <g id="mosaicZoom">
+                      <g id="mosaicTilesZoom"></g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+              <g id="lensDecor" opacity="0">
+                <circle id="lensGlassCirc" cx="0" cy="0" r="36" fill="url(#lensGrad)" stroke="url(#rimGrad)" stroke-width="3" />
+                <circle id="lensVigCirc" cx="0" cy="0" r="36" fill="url(#vigGrad)" />
+                <ellipse id="glare1" cx="-10.3" cy="-11.6" rx="10" ry="5.5" fill="white" opacity="0.15" transform="rotate(-35,-10.3,-11.6)" />
+                <ellipse id="glare2" cx="-14.1" cy="-15.4" rx="4" ry="2.2" fill="white" opacity="0.22" transform="rotate(-35,-14.1,-15.4)" />
+                <line id="handle1" x1="25.2" y1="25.2" x2="59.4" y2="59.4" stroke="url(#handleGrad)" stroke-width="12" stroke-linecap="round" />
+                <line id="handle2" x1="25.2" y1="25.2" x2="59.4" y2="59.4" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.18" />
+              </g>
+            </g>
+          </svg>
+          <p class="tagline">Training-Free Arbitrary-Resolution Photomosaics via Bootstrapped Tiled Denoising</p>
+        </div>
+      </header>
+
+      <section class="meta" aria-label="Authors and links">
+        <ul class="authors">
+          <li>
+            <a href="https://kooroshrh.github.io">Koorosh Roohi</a><sup class="affil-mark">1,2</sup
+            ><sup class="eq-mark" aria-hidden="true">*</sup>
+          </li>
+          <li>
+            <a href="https://www.cs.toronto.edu/~rajabi/">Javad Rajabi</a><sup class="affil-mark">1,2,3</sup
+            ><sup class="eq-mark" aria-hidden="true">*</sup>
+          </li>
+          <li>Andrew Fleet<sup class="affil-mark">2,4</sup></li>
+          <li>
+            <a href="https://www.cs.toronto.edu/~taati/">Babak Taati</a><sup class="affil-mark">1,2</sup>
+          </li>
+        </ul>
+        <p class="affiliations">
+          <sup>1</sup> University of Toronto · <sup>2</sup> Vector Institute · <sup>3</sup> Samsung Research ·
+          <sup>4</sup> Queen's University
+        </p>
+        <p class="authors-note"><span class="eq-mark" aria-hidden="true">*</span> Equal contribution</p>
+        <ul class="resource-links">
+          <li><span class="link-soon">arXiv — coming soon</span></li>
+          <li><span class="link-soon">Paper — coming soon</span></li>
+          <li><span class="link-soon">Code — coming soon</span></li>
+        </ul>
+      </section>
+
+      <figure class="teaser-mag" id="teaser-magnifier">
+        <img
+          class="teaser-img figure-upgrade"
+          src="assets/teaser-preview.jpg"
+          data-hq-src="assets/teaser.svg"
+          data-hq-width="2268"
+          data-hq-height="1544"
+          data-tiles='{"base":"assets/teaser-tiles","width":2268,"height":1544,"tile":512,"cols":5,"rows":4,"ext":"png"}'
+          alt="PhotoQuilt photomosaic teaser — hover to magnify"
+          width="2400"
+          height="1634"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <div class="teaser-lens" hidden aria-hidden="true"></div>
+      </figure>
+
+      <section class="abstract" aria-labelledby="abstract-heading">
+        <h2 id="abstract-heading">Abstract</h2>
+        <p>
+          Photomosaics are large images whose local regions are seen as independent tiles while their overall arrangement
+          forms a coherent scene. Generating them at high resolution, with every tile convincing in its own right, is
+          computationally expensive, since the canvas must hold many detailed tiles at once. We present
+          <strong>PhotoQuilt</strong>, a training-free framework that generates photomosaics at arbitrary resolution.
+          Diffusion models struggle to satisfy both scales at once, as direct high-resolution generation is costly and
+          tends toward one smooth image rather than a mosaic, while patch-based tiling keeps local detail but loses
+          global structure. PhotoQuilt resolves this with a bootstrapped tiled denoising procedure. We first produce a
+          global composition at low resolution to fix the layout, then upscale it in latent space and re-inject noise to
+          restore generative capacity. Denoising proceeds within fixed tiles, so each forms its own image while the
+          shared global structure holds them in one layout. Because tile generation is handled separately, PhotoQuilt
+          scales to large canvases without quadratic attention cost. Experiments show that PhotoQuilt outperforms current
+          baselines on both global structure and local realism.
+        </p>
+      </section>
+
+      <figure class="paper-figure paper-figure--wide paper-figure--transparent">
+        <img
+          src="assets/pipeline-photoquilt.svg"
+          alt="PhotoQuilt pipeline: low-resolution global layout, latent upscaling with noise re-injection, and tiled denoising"
+          width="362"
+          height="165"
+          decoding="async"
+          loading="lazy"
+        />
+        <figcaption>
+          PhotoQuilt data flow: a low-resolution pass fixes global layout; the latent canvas is upscaled and
+          re-noised to restore detail; tiled denoising then fills each region independently while sharing the same
+          composition.
+        </figcaption>
+      </figure>
+
+      <figure class="paper-figure paper-figure--wide paper-figure--transparent teaser-mag" id="dist-bird-magnifier">
+        <img
+          class="teaser-img figure-upgrade"
+          src="assets/dist-bird-preview.jpg"
+          data-hq-src="assets/dist-bird.png"
+          data-hq-width="14336"
+          data-hq-height="14336"
+          data-tiles='{"base":"assets/dist-bird-tiles","width":14336,"height":14336,"tile":256,"cols":56,"rows":56,"ext":"png"}'
+          alt="Toronto skyline photomosaic at 14K resolution — hover to magnify tile detail"
+          width="2400"
+          height="2400"
+          decoding="async"
+          loading="lazy"
+          fetchpriority="low"
+        />
+        <div class="teaser-lens" hidden aria-hidden="true"></div>
+        <figcaption>
+          Ultra-high-resolution photomosaic of the Toronto skyline at 14,336×14,336&nbsp;px with
+          256×256&nbsp;px tiles. Each tile is generated independently with the prompt “A bird.”
+        </figcaption>
+      </figure>
+
+      <footer class="site-foot">
+        <p>PhotoQuilt project page · <a href="../">kooroshrh.github.io</a></p>
+      </footer>
+    </main>
+
+    <script src="title.js"></script>
+    <script src="figures.js"></script>
+    <script src="teaser.js"></script>
+  </body>
+</html>

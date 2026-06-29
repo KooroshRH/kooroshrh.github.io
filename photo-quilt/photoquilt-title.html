@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhotoQuilt</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f12;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; overflow: hidden;
+  }
+  .scene { position: relative; }
+  #main { overflow: visible; display: block; }
+  .subtitle {
+    position: absolute; bottom: -52px; left: 50%;
+    transform: translateX(-50%);
+    color: #44444c; font-size: 12px; letter-spacing: 0.26em;
+    text-transform: uppercase; white-space: nowrap;
+    font-family: 'Lora', Georgia, serif;
+    opacity: 0; animation: fadeInSub 1s ease 1.6s forwards;
+  }
+  @keyframes fadeInSub { to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="scene">
+<svg id="main" width="760" height="170" viewBox="0 0 760 170">
+<defs>
+
+  <!-- Q glyph clip — exact Lora Bold at 130px, baseline y=128, origin x=394 -->
+  <!-- evenodd = hollow counter (inner circle cut out)                        -->
+  <clipPath id="qGlyphClip" clipPathUnits="userSpaceOnUse">
+    <path fill-rule="evenodd" d="
+      M492.02 156.34Q487.34 156.34 483.89 156.01Q480.45 155.69 477.26 154.19
+      Q474.08 152.70 470.05 149.06Q464.20 143.73 460.24 139.44
+      Q456.27 135.15 452.89 132.62Q449.51 130.08 445.35 130.08
+      Q433.26 129.82 424.62 125.59Q415.97 121.37 410.51 114.48
+      Q405.05 107.59 402.51 99.20Q399.98 90.82 399.98 82.50
+      Q399.98 74.31 402.71 65.92Q405.44 57.54 411.10 50.52
+      Q416.75 43.50 425.26 39.21Q433.78 34.92 445.22 34.92
+      Q457.18 34.92 465.89 39.21Q474.60 43.50 480.25 50.59
+      Q485.91 57.67 488.70 65.99Q491.50 74.31 491.50 82.50
+      Q491.50 89.65 489.36 97.00Q487.21 104.34 482.92 110.91
+      Q478.63 117.47 472.13 122.22Q465.63 126.96 456.79 128.91
+      Q460.04 128.91 462.84 129.50Q465.63 130.08 468.62 131.84
+      Q471.61 133.59 475.38 137.23Q479.93 141.39 483.05 144.25
+      Q486.17 147.11 488.38 148.80Q490.59 150.49 492.41 151.27
+      Q494.23 152.05 496.18 152.05 L496.18 156.34 Z
+      M446.52 124.75Q454.58 124.75 460.56 121.31
+      Q466.54 117.86 470.50 112.07Q474.47 106.29 476.49 99.20
+      Q478.50 92.12 478.50 84.97Q478.50 76.91 476.29 68.98
+      Q474.08 61.05 469.79 54.55Q465.50 48.05 459.19 44.08
+      Q452.89 40.12 444.83 40.12Q436.77 40.12 430.73 43.63
+      Q424.68 47.14 420.72 52.92Q416.75 58.71 414.74 65.79
+      Q412.72 72.88 412.72 80.16Q412.72 87.31 414.74 95.11
+      Q416.75 102.91 420.91 109.67Q425.07 116.43 431.44 120.59
+      Q437.81 124.75 446.52 124.75 Z"/>
+  </clipPath>
+
+  <!-- Lens circle clip — cx/cy updated dynamically to lens world position -->
+  <clipPath id="lensClip" clipPathUnits="userSpaceOnUse">
+    <circle id="lensCircleClip" cx="448" cy="95" r="56"/>
+  </clipPath>
+
+  <!-- Combined clip: intersection of lens circle AND Q glyph             -->
+  <!-- SVG doesn't do clip intersection natively, so we layer:            -->
+  <!-- clip to lens → inside that, clip to Q glyph                       -->
+  <!-- This is handled in markup order below (nested clips)               -->
+
+  <radialGradient id="lensGrad" cx="33%" cy="28%" r="68%">
+    <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="55%"  stop-color="#aaccee" stop-opacity="0.04"/>
+    <stop offset="100%" stop-color="#1050a0" stop-opacity="0.10"/>
+  </radialGradient>
+  <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%"   stop-color="#dde6f6"/>
+    <stop offset="45%"  stop-color="#8898bc"/>
+    <stop offset="100%" stop-color="#ccd8ec"/>
+  </linearGradient>
+  <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%"   stop-color="#ccd4e0"/>
+    <stop offset="100%" stop-color="#566070"/>
+  </linearGradient>
+  <radialGradient id="vigGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="58%"  stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.30"/>
+  </radialGradient>
+
+</defs>
+
+<!-- ── Title letters ── -->
+<text x="30"  y="128" id="tPhoto" font-family="Lora,Georgia,serif"
+  font-size="130" font-weight="700" fill="#e8e2d8" opacity="0">Photo</text>
+
+<!-- Q: rendered as normal letter, NO mosaic visible here -->
+<text x="394" y="128" id="tQ" font-family="Lora,Georgia,serif"
+  font-size="130" font-weight="700" fill="#e8e2d8" opacity="0">Q</text>
+
+<text x="475" y="128" id="tUilt" font-family="Lora,Georgia,serif"
+  font-size="130" font-weight="700" fill="#e8e2d8" opacity="0">uilt</text>
+
+<!--
+  ── Magnifier ──────────────────────────────────────────────────────────────────
+  Strategy for correct zoom:
+  • Everything in world space (no group translate on magnifier)
+  • lensClip circle moves to (lensX, lensY) in world coords
+  • Inside the lens clip we render a <use> of the scene scaled around lensCenter
+  • The glass, rim, handle are drawn relative to lensX/lensY via JS transforms
+
+  Zoom transform for content inside lens:
+    We want to show world content magnified ZOOM× centered on lens center (cx,cy).
+    The transform that does this:
+      translate(cx, cy)  scale(ZOOM)  translate(-cx, -cy)
+    Applied to an element at world position (px,py):
+      new_x = cx + ZOOM*(px - cx)
+      new_y = cy + ZOOM*(py - cy)
+    So a tile at the lens center stays put; tiles further away move outward.
+-->
+
+<!-- Content inside lens: clipped to lens circle -->
+<g clip-path="url(#lensClip)" id="lensContent">
+
+  <!-- Q letter fill inside lens (zoomed, so glyph edges align with tiles) -->
+  <text id="lensQtext" x="394" y="128" font-family="Lora,Georgia,serif"
+    font-size="130" font-weight="700" fill="#e8e2d8">Q</text>
+
+  <!-- Mosaic tiles, clipped to Q glyph shape, zoomed around lens center  -->
+  <!-- transform updated dynamically                                        -->
+  <g id="mosaicInLens" clip-path="url(#qGlyphClip)">
+    <!-- tiles injected by JS -->
+  </g>
+
+</g>
+
+<!-- Lens glass, rim, vignette, handle — drawn at lens center via transform -->
+<g id="lensDecor" opacity="0">
+  <circle id="lensGlassCirc" cx="448" cy="95" r="56"
+    fill="url(#lensGrad)" stroke="url(#rimGrad)" stroke-width="4.5"/>
+  <circle id="lensVigCirc"   cx="448" cy="95" r="56" fill="url(#vigGrad)"/>
+  <!-- Glare: offset relative to lens center, updated via JS -->
+  <ellipse id="glare1" cx="432" cy="77" rx="15" ry="8.5"
+    fill="white" opacity="0.15"/>
+  <ellipse id="glare2" cx="426" cy="71" rx="5.5" ry="3"
+    fill="white" opacity="0.22"/>
+  <!-- Handle: extends from lower-right of lens -->
+  <line id="handle1" x1="488" y1="135" x2="524" y2="171"
+    stroke="url(#handleGrad)" stroke-width="12" stroke-linecap="round"/>
+  <line id="handle2" x1="488" y1="135" x2="524" y2="171"
+    stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.18"/>
+</g>
+
+</svg>
+<div class="subtitle">Training-free Generative Photomosaic Synthesis</div>
+</div>
+
+<script>
+// ── Palette ───────────────────────────────────────────────────────────────────
+const PAL = [
+  '#c1440e','#d4622a','#e8845a','#f5a87c','#f0c090',
+  '#8b2500','#a33010','#c04820',
+  '#f0d080','#e8c050','#d4a830','#b88820',
+  '#4a7c9e','#2e5f82','#6a9ab8','#94bdd4','#b8d4e8',
+  '#7a5c3c','#a07850','#c09870','#d8b890',
+  '#c8b898','#e0d0b0','#f0e8d0',
+  '#3c5c3c','#5a7a5a','#7a9a6a','#9ab87a',
+  '#6a4a6a','#8a6a8a','#a88aac','#c4a8c8',
+  '#2a3a4a','#3a5060','#506878','#688898',
+  '#b8a080','#d0b898','#e8d0b0','#a08868',
+];
+
+const TILE = 7;    // world-space tile size (px)
+const GAP  = 0.7;
+const ZOOM = 2.4;  // magnification factor
+
+// Q bounding box in SVG world space
+const QX0 = 396, QY0 = 31, QW = 104, QH = 130;
+const COLS = Math.ceil(QW / TILE) + 2;
+const ROWS = Math.ceil(QH / TILE) + 2;
+
+function tileColor(c, r) {
+  return PAL[Math.abs((c*7 + r*13) ^ (c*3 + r*5)) % PAL.length];
+}
+
+// Build tile rects into container
+function buildTiles(container) {
+  container.innerHTML = '';
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x',      QX0 + c * TILE);
+      rect.setAttribute('y',      QY0 + r * TILE);
+      rect.setAttribute('width',  TILE - GAP);
+      rect.setAttribute('height', TILE - GAP);
+      rect.setAttribute('fill',   tileColor(c, r));
+      rect.setAttribute('rx',     '0.5');
+      container.appendChild(rect);
+    }
+  }
+}
+buildTiles(document.getElementById('mosaicInLens'));
+
+// ── Refs ──────────────────────────────────────────────────────────────────────
+const lensClipCirc  = document.getElementById('lensCircleClip');
+const lensDecor     = document.getElementById('lensDecor');
+const lensGlassCirc = document.getElementById('lensGlassCirc');
+const lensVigCirc   = document.getElementById('lensVigCirc');
+const glare1        = document.getElementById('glare1');
+const glare2        = document.getElementById('glare2');
+const handle1       = document.getElementById('handle1');
+const handle2       = document.getElementById('handle2');
+const mosaicInLens  = document.getElementById('mosaicInLens');
+const lensQtext     = document.getElementById('lensQtext');
+
+// ── Core: move everything to lens center (cx, cy) ────────────────────────────
+// Zoom transform for content inside lens:
+//   scale ZOOM around world point (cx,cy)
+//   matrix: translate(cx*(1-ZOOM), cy*(1-ZOOM))  scale(ZOOM)
+//   This is correct: a point at (cx,cy) maps to itself; others move outward.
+
+let lensX = 448, lensY = 95;
+
+function setLens(cx, cy) {
+  lensX = cx; lensY = cy;
+  const R = 56; // lens radius
+
+  // 1. Move clip circle to world position
+  lensClipCirc.setAttribute('cx', cx.toFixed(2));
+  lensClipCirc.setAttribute('cy', cy.toFixed(2));
+
+  // 2. Zoom transform for mosaic tiles AND Q letter inside lens
+  //    scale(ZOOM) around (cx, cy):
+  //    tx = cx - ZOOM*cx = cx*(1-ZOOM)
+  //    ty = cy - ZOOM*cy = cy*(1-ZOOM)
+  const tx = cx * (1 - ZOOM);
+  const ty = cy * (1 - ZOOM);
+  const zoomTf = `translate(${tx.toFixed(3)},${ty.toFixed(3)}) scale(${ZOOM})`;
+  mosaicInLens.setAttribute('transform', zoomTf);
+  lensQtext.setAttribute('transform', zoomTf);
+
+  // 3. Move glass circle + vignette
+  lensGlassCirc.setAttribute('cx', cx.toFixed(2));
+  lensGlassCirc.setAttribute('cy', cy.toFixed(2));
+  lensVigCirc.setAttribute('cx', cx.toFixed(2));
+  lensVigCirc.setAttribute('cy', cy.toFixed(2));
+
+  // 4. Glare (fixed offset from lens center)
+  glare1.setAttribute('cx', (cx - 16).toFixed(2));
+  glare1.setAttribute('cy', (cy - 18).toFixed(2));
+  glare1.setAttribute('transform', `rotate(-35,${(cx-16).toFixed(2)},${(cy-18).toFixed(2)})`);
+  glare2.setAttribute('cx', (cx - 22).toFixed(2));
+  glare2.setAttribute('cy', (cy - 24).toFixed(2));
+  glare2.setAttribute('transform', `rotate(-35,${(cx-22).toFixed(2)},${(cy-24).toFixed(2)})`);
+
+  // 5. Handle (from rim at ~45° lower-right to outside)
+  const hx1 = cx + R * 0.70, hy1 = cy + R * 0.70;
+  const hx2 = cx + R * 1.70, hy2 = cy + R * 1.70;
+  handle1.setAttribute('x1', hx1.toFixed(2)); handle1.setAttribute('y1', hy1.toFixed(2));
+  handle1.setAttribute('x2', hx2.toFixed(2)); handle1.setAttribute('y2', hy2.toFixed(2));
+  handle2.setAttribute('x1', hx1.toFixed(2)); handle2.setAttribute('y1', hy1.toFixed(2));
+  handle2.setAttribute('x2', hx2.toFixed(2)); handle2.setAttribute('y2', hy2.toFixed(2));
+}
+
+// ── Letter fade-in ────────────────────────────────────────────────────────────
+function fi(id, ms) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    el.style.transition = 'opacity 0.7s ease';
+    el.style.opacity = '1';
+  }, ms);
+}
+
+// ── Auto-animation waypoints (trace Q bowl then drift to tail) ────────────────
+const WP = [
+  { x: 418, y: 52,  t: 0.00 },
+  { x: 448, y: 38,  t: 0.14 },
+  { x: 478, y: 56,  t: 0.28 },
+  { x: 488, y: 82,  t: 0.40 },
+  { x: 478, y: 108, t: 0.52 },
+  { x: 458, y: 122, t: 0.63 },
+  { x: 474, y: 138, t: 0.75 },
+  { x: 486, y: 150, t: 0.90 },
+  { x: 486, y: 150, t: 1.00 },
+];
+const PARK = { x: 486, y: 150 };
+const AUTO_DUR = 3600;
+
+function eio(t) { return t<0.5 ? 2*t*t : -1+(4-2*t)*t; }
+function lerp(a,b,t) { return a+(b-a)*t; }
+
+function interpWP(p) {
+  for (let i = 0; i < WP.length-1; i++) {
+    const a=WP[i], b=WP[i+1];
+    if (p >= a.t && p <= b.t) {
+      const s = eio((p-a.t)/(b.t-a.t));
+      return { x:lerp(a.x,b.x,s), y:lerp(a.y,b.y,s) };
+    }
+  }
+  return WP[WP.length-1];
+}
+
+// ── State machine ─────────────────────────────────────────────────────────────
+let state = 'idle';
+let autoT0 = null;
+
+function setLensOpacity(v, dur='0.5s') {
+  lensDecor.style.transition = `opacity ${dur} ease`;
+  lensDecor.style.opacity = v;
+  document.getElementById('lensContent').style.transition = `opacity ${dur} ease`;
+  document.getElementById('lensContent').style.opacity = v;
+}
+
+function startAuto() {
+  state = 'autoplay';
+  setLensOpacity('1', '0.5s');
+  autoT0 = performance.now();
+  requestAnimationFrame(tickAuto);
+}
+
+function tickAuto(now) {
+  const p = Math.min((now - autoT0) / AUTO_DUR, 1);
+  const pos = interpWP(p);
+  setLens(pos.x, pos.y);
+  if (p < 1) {
+    requestAnimationFrame(tickAuto);
+  } else {
+    state = 'parked';
+    setTimeout(() => {
+      if (state === 'parked') setLensOpacity('0.25', '1s');
+    }, 800);
+  }
+}
+
+// ── Hover ─────────────────────────────────────────────────────────────────────
+const svg = document.getElementById('main');
+let hovering = false;
+let tgtX = PARK.x, tgtY = PARK.y;
+let curX = PARK.x, curY = PARK.y;
+let hRaf = null;
+
+function svgXY(e) {
+  const r = svg.getBoundingClientRect();
+  return {
+    x: (e.clientX - r.left) * (760 / r.width),
+    y: (e.clientY - r.top)  * (170 / r.height),
+  };
+}
+
+function inQ(x,y) {
+  return x >= QX0-20 && x <= QX0+QW+20
+      && y >= QY0-10 && y <= QY0+QH+15;
+}
+
+function tickHover() {
+  curX += (tgtX - curX) * 0.15;
+  curY += (tgtY - curY) * 0.15;
+  setLens(curX, curY);
+  if (hovering) hRaf = requestAnimationFrame(tickHover);
+}
+
+svg.addEventListener('mousemove', e => {
+  if (state === 'autoplay') return;
+  const {x,y} = svgXY(e);
+  if (inQ(x,y)) {
+    tgtX = x; tgtY = y;
+    if (!hovering) {
+      hovering = true; state = 'hover';
+      setLensOpacity('1', '0.2s');
+      curX = lensX; curY = lensY;
+      cancelAnimationFrame(hRaf);
+      hRaf = requestAnimationFrame(tickHover);
+    }
+  } else if (hovering) endHover();
+});
+
+svg.addEventListener('mouseleave', () => { if (hovering) endHover(); });
+
+function endHover() {
+  hovering = false; state = 'parked';
+  cancelAnimationFrame(hRaf);
+  const fx=curX, fy=curY, t0=performance.now(), d=700;
+  function ret(now) {
+    const t = eio(Math.min((now-t0)/d, 1));
+    curX=lerp(fx,PARK.x,t); curY=lerp(fy,PARK.y,t);
+    setLens(curX, curY);
+    if (t<1) requestAnimationFrame(ret);
+    else setTimeout(() => {
+      if (state==='parked') setLensOpacity('0.25', '0.9s');
+    }, 100);
+  }
+  requestAnimationFrame(ret);
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+setLens(WP[0].x, WP[0].y);
+setLensOpacity('0', '0s');
+
+fi('tPhoto', 200);
+setTimeout(() => { fi('tQ', 320); fi('tUilt', 440); }, 200);
+setTimeout(startAuto, 1100);
+</script>
+</body>
+</html>
