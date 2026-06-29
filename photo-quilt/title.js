@@ -24,6 +24,23 @@
   const ROWS = Math.ceil(130 / TILE) + TILE_PAD * 2;
   const PARK = { x: 486, y: 150 };
   const INTRO_EVENT = "photoquilt:intro-complete";
+  const LENS_TOUR_MS = 2550;
+  const LENS_TOUR_DELAY_MS = 0;
+
+  function fadeInLetter(id, ms) {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.transition = "opacity 0.2s ease-out";
+      el.style.opacity = "1";
+    }, ms);
+  }
+
+  function startLetters() {
+    fadeInLetter("tPhoto", 0);
+    fadeInLetter("tQ", 45);
+    fadeInLetter("tUilt", 90);
+  }
 
   function tileColor(c, r) {
     return PAL[Math.abs((c * 7 + r * 13) ^ (c * 3 + r * 5)) % PAL.length];
@@ -33,7 +50,7 @@
     container.innerHTML = "";
     let row = 0;
     let col = 0;
-    const batch = 24;
+    const batch = 48;
     const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 16));
 
     function step(deadline) {
@@ -59,8 +76,8 @@
         added += 1;
       }
 
-      if (row < ROWS) idle(step, { timeout: 120 });
-      else onDone();
+      if (row < ROWS) idle(step, { timeout: 60 });
+      else if (onDone) onDone();
     }
 
     idle(step, { timeout: 120 });
@@ -71,7 +88,10 @@
   const mosaicZoom = document.getElementById("mosaicZoom");
   if (!svg || !mosaicTilesZoom || !mosaicZoom) return;
 
-  buildTiles(mosaicTilesZoom, boot);
+  startLetters();
+  const lensStartAt = performance.now() + 130;
+  buildTiles(mosaicTilesZoom);
+  requestAnimationFrame(boot);
 
   function boot() {
     const zoomTx = QCX * (1 - ZOOM);
@@ -109,15 +129,6 @@
       if (lensMaskR > 0) setLensMaskRadius(lensMaskR);
     }
 
-    function fi(id, ms) {
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.style.transition = "opacity 0.28s ease";
-        el.style.opacity = "1";
-      }, ms);
-    }
-
     function eio(t) {
       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
     }
@@ -152,10 +163,10 @@
 
     function startAuto() {
       state = "autoplay";
-      setLensOpacity("1", "0.25s");
+      setLensOpacity("1", "0.1s");
       svg.classList.add("is-lens-touring");
       lensRig.addEventListener("animationend", finishIntro, { once: true });
-      setTimeout(finishIntro, 2500);
+      setTimeout(finishIntro, LENS_TOUR_DELAY_MS + LENS_TOUR_MS + 350);
     }
 
     let hovering = false;
@@ -233,11 +244,7 @@
 
     setLens(418, 52);
     setLensOpacity("0", "0s");
-    fi("tPhoto", 60);
-    setTimeout(() => {
-      fi("tQ", 95);
-      fi("tUilt", 140);
-    }, 60);
-    setTimeout(startAuto, 400);
+    const lensDelay = Math.max(0, lensStartAt - performance.now());
+    setTimeout(startAuto, lensDelay);
   }
 })();

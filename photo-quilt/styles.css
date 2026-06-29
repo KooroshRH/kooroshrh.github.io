@@ -203,20 +203,20 @@ a:hover {
 }
 
 #main.is-lens-touring #lensRig {
-  animation: lens-tour 1.85s ease-in-out 0.4s forwards;
+  animation: lens-tour 2.55s ease-in-out 0s forwards;
   will-change: transform;
 }
 
 #main.is-lens-touring #mosaicOffset {
-  animation: lens-mosaic-pan 1.85s ease-in-out 0.4s forwards;
+  animation: lens-mosaic-pan 2.55s ease-in-out 0s forwards;
   will-change: transform;
 }
 
 #main.is-lens-touring #lensMaskCircle {
   animation:
-    lens-clip-cx 1.85s ease-in-out 0.4s forwards,
-    lens-clip-cy 1.85s ease-in-out 0.4s forwards,
-    lens-mask-open 0.25s ease 0.4s forwards;
+    lens-clip-cx 2.55s ease-in-out 0s forwards,
+    lens-clip-cy 2.55s ease-in-out 0s forwards,
+    lens-mask-open 0.12s ease 0s forwards;
   will-change: cx, cy;
 }
 
