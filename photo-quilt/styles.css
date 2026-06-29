@@ -388,7 +388,10 @@ a:hover {
 }
 
 .figure-zoom__viewport {
+  position: relative;
   overflow: hidden;
+  width: 100%;
+  aspect-ratio: var(--zoom-aspect, 1);
   cursor: zoom-in;
   border-radius: inherit;
   outline: none;
@@ -412,18 +415,40 @@ a:hover {
 }
 
 .figure-zoom__stage {
-  transform-origin: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .figure-zoom__img {
   display: block;
-  width: 100%;
+  max-width: none;
+  width: auto;
   height: auto;
   image-rendering: auto;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.figure-zoom.is-loading-hq .figure-zoom__viewport::after {
+  content: "Loading detail…";
+  position: absolute;
+  bottom: 0.65rem;
+  left: 0.65rem;
+  z-index: 3;
+  padding: 0.3rem 0.55rem;
+  border-radius: 3px;
+  background: rgba(16, 16, 20, 0.82);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
 }
 
 .figure-zoom__reset {

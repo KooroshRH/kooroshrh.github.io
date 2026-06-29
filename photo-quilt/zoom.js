@@ -25,35 +25,90 @@
     let panStartX = 0;
     let panStartY = 0;
     let activePointerId = null;
+    let savedViewFrac = null;
+
+    function naturalSize() {
+      const natW = img.naturalWidth || Number(img.getAttribute("width")) || 1;
+      const natH = img.naturalHeight || Number(img.getAttribute("height")) || 1;
+      return { natW, natH };
+    }
+
+    function baseFit() {
+      const { natW, natH } = naturalSize();
+      const vw = viewport.clientWidth;
+      const vh = viewport.clientHeight;
+      if (!vw || !vh || !natW || !natH) return 1;
+      return Math.min(vw / natW, vh / natH);
+    }
+
+    function currentScale() {
+      return baseFit() * ZOOM_LEVELS[level];
+    }
+
+    function layoutImage() {
+      const { natW, natH } = naturalSize();
+      img.style.width = `${natW}px`;
+      img.style.height = `${natH}px`;
+    }
 
     function imagePointFromClient(clientX, clientY) {
-      const rect = img.getBoundingClientRect();
-      if (!rect.width || !rect.height) return { px: 0, py: 0 };
+      const vr = viewport.getBoundingClientRect();
+      const vx = clientX - vr.left;
+      const vy = clientY - vr.top;
+      const scale = currentScale();
       return {
-        px: ((clientX - rect.left) / rect.width) * img.clientWidth,
-        py: ((clientY - rect.top) / rect.height) * img.clientHeight,
+        px: (vx - panX) / scale,
+        py: (vy - panY) / scale,
       };
     }
 
-    function clampPanToBounds() {
-      const scale = ZOOM_LEVELS[level];
+    function captureViewFraction() {
+      const scale = currentScale();
+      const { natW, natH } = naturalSize();
       const vw = viewport.clientWidth;
       const vh = viewport.clientHeight;
-      const iw = img.clientWidth;
-      const ih = img.clientHeight;
-      panX = clampPan(panX, scale, iw, vw);
-      panY = clampPan(panY, scale, ih, vh);
+      return {
+        fx: (vw / 2 - panX) / scale / natW,
+        fy: (vh / 2 - panY) / scale / natH,
+      };
+    }
+
+    function restoreViewFraction(frac) {
+      layoutImage();
+      const scale = currentScale();
+      const { natW, natH } = naturalSize();
+      const vw = viewport.clientWidth;
+      const vh = viewport.clientHeight;
+      const px = frac.fx * natW;
+      const py = frac.fy * natH;
+      panX = vw / 2 - px * scale;
+      panY = vh / 2 - py * scale;
+      clampPanToBounds();
+      applyTransform(false);
+    }
+
+    function clampPanToBounds() {
+      if (level === 0) return;
+      const scale = currentScale();
+      const { natW, natH } = naturalSize();
+      const vw = viewport.clientWidth;
+      const vh = viewport.clientHeight;
+      panX = clampPan(panX, scale, natW, vw);
+      panY = clampPan(panY, scale, natH, vh);
     }
 
     function applyTransform(animate) {
-      const scale = ZOOM_LEVELS[level];
+      const bf = baseFit();
       stage.style.transition = animate ? "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)" : "none";
-      if (level === 0) {
-        stage.style.transform = "";
-      } else {
-        stage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
-      }
       stage.style.transformOrigin = "0 0";
+
+      if (level === 0) {
+        panX = 0;
+        panY = 0;
+        stage.style.transform = `scale(${bf})`;
+      } else {
+        stage.style.transform = `translate(${panX}px, ${panY}px) scale(${currentScale()})`;
+      }
     }
 
     function setZoomState() {
@@ -64,6 +119,8 @@
 
     function maybeLoadHq() {
       if (level > 0 && img.dataset.hqSrc && img.dataset.hqLoaded !== "1" && window.PhotoQuiltFigures) {
+        savedViewFrac = captureViewFraction();
+        figure.classList.add("is-loading-hq");
         window.PhotoQuiltFigures.upgradeFigure(img);
       }
     }
@@ -72,7 +129,7 @@
       const { px, py } = imagePointFromClient(clientX, clientY);
       level = targetLevel;
 
-      const scale = ZOOM_LEVELS[level];
+      const scale = currentScale();
       const vw = viewport.clientWidth;
       const vh = viewport.clientHeight;
 
@@ -89,16 +146,29 @@
       level = 0;
       panX = 0;
       panY = 0;
-      figure.classList.remove("is-dragging");
+      savedViewFrac = null;
+      figure.classList.remove("is-dragging", "is-loading-hq");
       setZoomState();
       applyTransform(true);
 
       const onEnd = (event) => {
         if (event.propertyName !== "transform") return;
         stage.removeEventListener("transitionend", onEnd);
-        if (level === 0) stage.style.transform = "";
+        if (level === 0) applyTransform(false);
       };
       stage.addEventListener("transitionend", onEnd);
+    }
+
+    function onLayoutChange() {
+      layoutImage();
+      if (level > 0 && savedViewFrac) {
+        restoreViewFraction(savedViewFrac);
+      } else if (level > 0) {
+        clampPanToBounds();
+        applyTransform(false);
+      } else {
+        applyTransform(false);
+      }
     }
 
     function onPointerDown(e) {
@@ -126,9 +196,10 @@
         figure.classList.add("is-dragging");
       }
 
-      const scale = ZOOM_LEVELS[level];
-      panX = clampPan(panStartX + dx, scale, img.clientWidth, viewport.clientWidth);
-      panY = clampPan(panStartY + dy, scale, img.clientHeight, viewport.clientHeight);
+      const scale = currentScale();
+      const { natW, natH } = naturalSize();
+      panX = clampPan(panStartX + dx, scale, natW, viewport.clientWidth);
+      panY = clampPan(panStartY + dy, scale, natH, viewport.clientHeight);
       applyTransform(false);
     }
 
@@ -176,19 +247,33 @@
       if (e.key === "Escape") zoomOut();
     });
 
-    img.addEventListener("load", () => {
-      if (level > 0) {
-        clampPanToBounds();
-        applyTransform(false);
+    img.addEventListener("load", onLayoutChange);
+
+    img.addEventListener("figure-hq-loaded", () => {
+      figure.classList.remove("is-loading-hq");
+      if (level > 0 && savedViewFrac) {
+        restoreViewFraction(savedViewFrac);
+        savedViewFrac = null;
+      } else {
+        onLayoutChange();
       }
+    });
+
+    img.addEventListener("figure-hq-error", () => {
+      figure.classList.remove("is-loading-hq");
+      savedViewFrac = null;
     });
 
     window.addEventListener("resize", () => {
       if (level > 0) {
         clampPanToBounds();
         applyTransform(false);
+      } else {
+        applyTransform(false);
       }
     });
+
+    if (img.complete) onLayoutChange();
   }
 
   document.querySelectorAll(".figure-zoom").forEach(initFigureZoom);

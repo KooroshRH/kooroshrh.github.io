@@ -7,14 +7,16 @@
 
     const hq = new Image();
     hq.decoding = "async";
-    hq.src = hqSrc;
     hq.onload = () => {
       img.src = hqSrc;
-      if (img.dataset.hqWidth) img.width = Number(img.dataset.hqWidth);
-      if (img.dataset.hqHeight) img.height = Number(img.dataset.hqHeight);
       img.dataset.hqLoaded = "1";
       img.classList.add("is-hq");
+      img.dispatchEvent(new CustomEvent("figure-hq-loaded", { bubbles: true }));
     };
+    hq.onerror = () => {
+      img.dispatchEvent(new CustomEvent("figure-hq-error", { bubbles: true }));
+    };
+    hq.src = hqSrc;
   }
 
   window.PhotoQuiltFigures = { upgradeFigure };
