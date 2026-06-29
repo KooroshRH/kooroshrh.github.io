@@ -162,21 +162,21 @@
         </ul>
       </section>
 
-      <figure class="teaser-mag" id="teaser-magnifier">
-        <img
-          class="teaser-img figure-upgrade"
-          src="assets/teaser-preview.jpg"
-          data-hq-src="assets/teaser.svg"
-          data-hq-width="2268"
-          data-hq-height="1544"
-          data-tiles='{"base":"assets/teaser-tiles","width":2268,"height":1544,"tile":512,"cols":5,"rows":4,"ext":"png"}'
-          alt="PhotoQuilt photomosaic teaser — hover to magnify"
-          width="2400"
-          height="1634"
-          decoding="async"
-          fetchpriority="high"
-        />
-        <div class="teaser-lens" hidden aria-hidden="true"></div>
+      <figure class="figure-zoom" id="teaser-zoom">
+        <div class="figure-zoom__viewport" tabindex="0" role="button" aria-label="Click to zoom in">
+          <div class="figure-zoom__stage">
+            <img
+              class="figure-zoom__img"
+              src="assets/teaser-preview.jpg"
+              alt="PhotoQuilt photomosaic teaser — click to zoom"
+              width="2400"
+              height="1634"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+        <button type="button" class="figure-zoom__reset" hidden aria-label="Reset zoom">Reset</button>
       </figure>
 
       <section class="abstract" aria-labelledby="abstract-heading">
@@ -213,25 +213,30 @@
         </figcaption>
       </figure>
 
-      <figure class="paper-figure paper-figure--wide paper-figure--transparent teaser-mag" id="dist-bird-magnifier">
-        <img
-          class="teaser-img figure-upgrade"
-          src="assets/dist-bird-preview.jpg"
-          data-hq-src="assets/dist-bird.png"
-          data-hq-width="14336"
-          data-hq-height="14336"
-          data-tiles='{"base":"assets/dist-bird-tiles","width":14336,"height":14336,"tile":256,"cols":56,"rows":56,"ext":"png"}'
-          alt="Toronto skyline photomosaic at 14K resolution — hover to magnify tile detail"
-          width="2400"
-          height="2400"
-          decoding="async"
-          loading="lazy"
-          fetchpriority="low"
-        />
-        <div class="teaser-lens" hidden aria-hidden="true"></div>
+      <figure class="paper-figure paper-figure--wide paper-figure--transparent figure-zoom" id="dist-bird-zoom">
+        <div class="figure-zoom__viewport" tabindex="0" role="button" aria-label="Click to zoom in">
+          <div class="figure-zoom__stage">
+            <img
+              class="figure-zoom__img figure-upgrade"
+              src="assets/dist-bird-preview.jpg"
+              data-hq-src="assets/dist-bird.png"
+              data-hq-width="14336"
+              data-hq-height="14336"
+              data-hq-defer="zoom"
+              alt="Toronto skyline photomosaic at 14K resolution — click to zoom"
+              width="2400"
+              height="2400"
+              decoding="async"
+              loading="lazy"
+              fetchpriority="low"
+            />
+          </div>
+        </div>
+        <button type="button" class="figure-zoom__reset" hidden aria-label="Reset zoom">Reset</button>
         <figcaption>
           Ultra-high-resolution photomosaic of the Toronto skyline at 14,336×14,336&nbsp;px with
           256×256&nbsp;px tiles. Each tile is generated independently with the prompt “A bird.”
+          Click to zoom (twice for full detail); drag to pan when zoomed.
         </figcaption>
       </figure>
 
@@ -242,6 +247,6 @@
 
     <script src="title.js"></script>
     <script src="figures.js"></script>
-    <script src="teaser.js"></script>
+    <script src="zoom.js"></script>
   </body>
 </html>

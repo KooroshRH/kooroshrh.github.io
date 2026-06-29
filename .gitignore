@@ -1,1 +1,6 @@
 .DS_Store
+
+# Unused tile pyramids (replaced by click-to-zoom)
+photo-quilt/assets/teaser-tiles/
+photo-quilt/assets/dist-bird-tiles/
+photo-quilt/assets/dist-bird-tiles-lod/

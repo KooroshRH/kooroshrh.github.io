@@ -17,9 +17,15 @@
     };
   }
 
-  function upgradeAllFigures() {
-    document.querySelectorAll("img.figure-upgrade[data-hq-src]").forEach(upgradeFigure);
-  }
+  window.PhotoQuiltFigures = { upgradeFigure };
 
-  window.addEventListener(INTRO_EVENT, upgradeAllFigures, { once: true });
+  window.addEventListener(
+    INTRO_EVENT,
+    () => {
+      document
+        .querySelectorAll("img.figure-upgrade[data-hq-src]:not([data-hq-defer])")
+        .forEach(upgradeFigure);
+    },
+    { once: true }
+  );
 })();
