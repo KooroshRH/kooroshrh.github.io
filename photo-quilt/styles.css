@@ -322,6 +322,10 @@ a:hover {
 }
 
 .affiliations {
+  position: relative;
+  left: 50%;
+  width: min(62rem, calc(100vw - 2rem));
+  transform: translateX(-50%);
   margin: 0 0 0.5rem;
   font-size: 0.96rem;
   line-height: 1.5;
@@ -649,6 +653,12 @@ a:hover {
 @media (max-width: 560px) {
   .page {
     padding-inline: 1rem;
+  }
+
+  .affiliations {
+    left: auto;
+    width: 100%;
+    transform: none;
   }
 
   .figure-zoom__viewport {
