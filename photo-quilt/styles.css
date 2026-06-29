@@ -505,6 +505,58 @@ a:hover {
   color: var(--ink);
 }
 
+.citation {
+  margin: 2.5rem 0 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+
+.citation h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+}
+
+.citation__pending {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+}
+
+.citation:has(#citation-bibtex:not(:empty)) .citation__pending {
+  display: none;
+}
+
+.citation__bibtex {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.28);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  tab-size: 2;
+  white-space: pre;
+}
+
+.citation__bibtex:has(#citation-bibtex:empty) {
+  display: none;
+}
+
+.citation__bibtex code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .paper-figure {
   margin: 0 0 2.35rem;
   text-align: center;
