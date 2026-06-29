@@ -113,7 +113,7 @@
       setTimeout(() => {
         const el = document.getElementById(id);
         if (!el) return;
-        el.style.transition = "opacity 0.45s ease";
+        el.style.transition = "opacity 0.28s ease";
         el.style.opacity = "1";
       }, ms);
     }
@@ -152,10 +152,10 @@
 
     function startAuto() {
       state = "autoplay";
-      setLensOpacity("1", "0.35s");
+      setLensOpacity("1", "0.25s");
       svg.classList.add("is-lens-touring");
       lensRig.addEventListener("animationend", finishIntro, { once: true });
-      setTimeout(finishIntro, 3000);
+      setTimeout(finishIntro, 2500);
     }
 
     let hovering = false;
@@ -233,11 +233,11 @@
 
     setLens(418, 52);
     setLensOpacity("0", "0s");
-    fi("tPhoto", 120);
+    fi("tPhoto", 60);
     setTimeout(() => {
-      fi("tQ", 190);
-      fi("tUilt", 265);
-    }, 120);
-    setTimeout(startAuto, 660);
+      fi("tQ", 95);
+      fi("tUilt", 140);
+    }, 60);
+    setTimeout(startAuto, 400);
   }
 })();
