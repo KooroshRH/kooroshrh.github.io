@@ -385,6 +385,11 @@ a:hover {
   opacity: 0.9;
 }
 
+.resource-link__icon--hf {
+  display: block;
+  object-fit: contain;
+}
+
 .resource-links a {
   color: var(--ink);
   border-color: rgba(221, 230, 246, 0.42);
