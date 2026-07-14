@@ -82,6 +82,63 @@
   </head>
   <body>
     <div class="wrap">
+      <figure class="signal-banner-wrap" aria-hidden="true">
+        <svg id="signal-banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 150">
+          <style>
+            .signal-banner-wrap {
+              margin: 0 0 1.9rem;
+            }
+            #signal-banner {
+              display: block;
+              width: 100%;
+              height: clamp(96px, 12vw, 150px);
+              cursor: crosshair;
+              touch-action: pan-y;
+            }
+            #signal-banner .sb-dot {
+              fill: var(--accent);
+            }
+            #signal-banner .sb-dot--alt {
+              fill: var(--accent-teal);
+            }
+            #signal-banner .sb-axis {
+              stroke: var(--rule);
+            }
+            #signal-banner .sb-label {
+              fill: var(--ink-faint);
+              font-family: var(--font-mono);
+              font-size: 9.5px;
+              letter-spacing: 0.09em;
+              text-transform: uppercase;
+            }
+            #signal-banner .sb-sweep {
+              stroke: var(--accent-soft);
+            }
+            #signal-banner .sb-ret line {
+              stroke: var(--accent-soft);
+              stroke-dasharray: 2 5;
+            }
+            #signal-banner .sb-ret circle {
+              stroke: var(--accent);
+              fill: none;
+            }
+            #signal-banner .sb-readout {
+              fill: var(--accent);
+              font-family: var(--font-mono);
+              font-size: 10px;
+              letter-spacing: 0.05em;
+              stroke: var(--bg-elev);
+              stroke-width: 3.5px;
+              paint-order: stroke;
+              stroke-linejoin: round;
+            }
+            #signal-banner .sb-ripple {
+              stroke: var(--accent-teal);
+              fill: none;
+            }
+          </style>
+        </svg>
+      </figure>
       <div class="page-layout">
         <aside class="sidebar" aria-label="Profile and research interests">
           <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">
@@ -188,12 +245,16 @@
               deployed, and used without leaving their assumptions at the lab door.
             </p>
             <ul class="interests">
-              <li>Deep learning for multi-modal sensing and 3D point cloud processing (mmWave radar, RGB-D, IMU, BLE)</li>
-              <li>Human activity and sequence recognition; spatio-temporal models in clinical and ambient environments</li>
-              <li>Indoor localization, sensor fusion, and real-time inference on edge and wireless pipelines</li>
-              <li>Generative models: diffusion and image synthesis; video-to-video translation and style transfer</li>
-              <li>Vision–language models, multi-agent systems, and learning under limited labeled data</li>
-              <li>Machine learning for infection transmission and exposure risk in healthcare settings</li>
+              <li>
+                Multi-modal sensing and 3D point-cloud processing (mmWave radar, RGB-D, IMU, BLE), including indoor
+                localization and sensor fusion
+              </li>
+              <li>Human activity and sequence recognition; spatio-temporal models in clinical and ambient settings</li>
+              <li>
+                Generative models—diffusion, image synthesis, video-to-video translation—and vision–language and
+                multi-agent systems
+              </li>
+              <li>Machine learning for infection transmission and exposure risk in healthcare</li>
             </ul>
           </section>
         </aside>
@@ -363,7 +424,7 @@
         </section>
 
         <section class="glance" id="background" aria-labelledby="bg-heading">
-          <h2 id="bg-heading">Background — briefly</h2>
+          <h2 id="bg-heading">Education &amp; Teaching</h2>
           <h3>Education</h3>
           <ul class="glance-list glance-edu">
             <li>
@@ -402,5 +463,6 @@
     <script>
       document.getElementById("y").textContent = new Date().getFullYear();
     </script>
+    <script src="assets/signal-banner.js?v=1" defer></script>
   </body>
 </html>
