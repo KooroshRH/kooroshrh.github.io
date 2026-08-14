@@ -47,7 +47,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260814d" />
+    <link rel="stylesheet" href="styles.css?v=20260814g" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -81,23 +81,23 @@
     </script>
   </head>
   <body>
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.5 5.5 0 0 1-6.14-6.14A9 9 0 0 0 12 3z"
+        />
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-16h1.5v3H12V2zm0 19h1.5v3H12v-3zM4.22 4.22l1.06 1.06 2.12-2.12-1.06-1.06-2.12 2.12zm13.4 13.4 1.06 1.06 2.12-2.12-1.06-1.06-2.12 2.12zM2 12h3v1.5H2V12zm19 0h-3v1.5h3V12zM4.22 19.78l2.12-2.12 1.06 1.06-2.12 2.12-1.06-1.06zm13.4-13.4 2.12 2.12 1.06-1.06-2.12-2.12-1.06 1.06z"
+        />
+      </svg>
+    </button>
     <div class="wrap">
       <div class="page-layout">
         <aside class="sidebar" aria-label="Profile and research interests">
-          <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode">
-            <svg class="icon-moon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.5 5.5 0 0 1-6.14-6.14A9 9 0 0 0 12 3z"
-              />
-            </svg>
-            <svg class="icon-sun" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-16h1.5v3H12V2zm0 19h1.5v3H12v-3zM4.22 4.22l1.06 1.06 2.12-2.12-1.06-1.06-2.12 2.12zm13.4 13.4 1.06 1.06 2.12-2.12-1.06-1.06-2.12 2.12zM2 12h3v1.5H2V12zm19 0h-3v1.5h3V12zM4.22 19.78l2.12-2.12 1.06 1.06-2.12 2.12-1.06-1.06zm13.4-13.4 2.12 2.12 1.06-1.06-2.12-2.12-1.06 1.06z"
-              />
-            </svg>
-          </button>
           <header class="site">
             <div class="hero">
           <figure class="hero-photo">
@@ -110,9 +110,11 @@
               fetchpriority="high"
             />
           </figure>
-          <div class="hero-main">
+          <div class="hero-identity">
             <h1>Koorosh Roohi</h1>
             <p class="tagline">Machine learning, computer vision, and multi-modal sensing.</p>
+          </div>
+          <div class="hero-meta">
             <p class="title-line">Ph.D. candidate, University of Toronto</p>
             <p class="contact-email">
               <a href="mailto:koorosh.roohi@mail.utoronto.ca">koorosh.roohi@mail.utoronto.ca</a>

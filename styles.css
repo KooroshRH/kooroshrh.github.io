@@ -16,7 +16,7 @@
   --ink-authors: #6e6a62;
   --measure: 43rem;
   --layout-max: 72rem;
-  --sidebar-width: 20rem;
+  --sidebar-width: 22rem;
   --layout-gap: 3rem;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --gradient-accent: rgba(35, 64, 96, 0.055);
@@ -138,10 +138,10 @@ a:hover {
 }
 
 .theme-toggle {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
+  position: fixed;
+  top: 1.1rem;
+  right: 1.1rem;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,16 +194,18 @@ header.site {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(7.5rem, 9.25rem) 1fr;
-  gap: 1.5rem 1.85rem;
-  align-items: start;
+  grid-template-columns: minmax(7.25rem, 8.25rem) minmax(0, 1fr);
+  gap: 0.95rem 1.2rem;
+  align-items: center;
 }
 
 .hero-photo {
+  grid-column: 1;
+  grid-row: 1;
   margin: 0;
   position: relative;
   aspect-ratio: 4 / 5;
-  max-width: 9.25rem;
+  max-width: 8.25rem;
   border: 1px solid var(--rule);
   background: var(--paper);
   overflow: hidden;
@@ -235,7 +237,13 @@ header.site {
   object-fit: cover;
 }
 
-.hero-main h1 {
+.hero-identity {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.hero-identity h1 {
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   font-weight: 500;
   font-size: clamp(2.05rem, 4.5vw, 2.65rem);
@@ -245,7 +253,7 @@ header.site {
   color: var(--ink);
 }
 
-.hero-main h1::after {
+.hero-identity h1::after {
   content: "";
   display: block;
   width: 2.75rem;
@@ -261,16 +269,20 @@ header.site {
   font-style: italic;
   font-weight: 500;
   color: var(--ink-muted);
-  margin: 0 0 0.8rem;
+  margin: 0;
   line-height: 1.38;
   max-width: 26em;
+}
+
+.hero-meta {
+  grid-column: 1 / -1;
 }
 
 .title-line {
   font-size: 0.98rem;
   color: var(--ink-muted);
   font-weight: 450;
-  margin: 0 0 1.05rem;
+  margin: 0.15rem 0 0.7rem;
   line-height: 1.45;
 }
 
@@ -836,9 +848,8 @@ footer.site {
   }
 
   header.site {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.35rem;
-    padding-right: 2.6rem;
+    margin-bottom: 1.35rem;
+    padding-bottom: 1.15rem;
   }
 
   .sidebar #research {
@@ -850,20 +861,28 @@ footer.site {
   }
 
   .hero {
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: 0.85rem 1.1rem;
+    align-items: center;
   }
 
   .hero-photo {
-    max-width: 10.5rem;
-    margin-inline: auto;
+    max-width: 8rem;
+    margin-inline: 0;
   }
 
-  .sidebar .hero-main h1 {
-    font-size: 2.1rem;
+  .sidebar .hero-identity h1 {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
   }
 
-  .tagline {
+  .sidebar .hero-identity h1::after {
+    margin-top: 0.4rem;
+    width: 2.4rem;
+  }
+
+  .sidebar .tagline {
+    font-size: 1.08rem;
     max-width: none;
   }
 
@@ -888,15 +907,23 @@ footer.site {
     text-align: center;
   }
 
+  .hero-photo,
+  .hero-identity,
+  .hero-meta {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
   .hero-photo {
     max-width: 10rem;
   }
 
-  .hero-main {
+  .hero-identity,
+  .hero-meta {
     width: 100%;
   }
 
-  .hero-main h1::after {
+  .hero-identity h1::after {
     margin-left: auto;
     margin-right: auto;
   }
