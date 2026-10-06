@@ -957,6 +957,10 @@ h2:hover::before {
   color: var(--rule);
 }
 
+.glance + .glance {
+  margin-top: 2.1rem;
+}
+
 footer.site {
   margin-top: 2.65rem;
   padding-top: 1.45rem;
