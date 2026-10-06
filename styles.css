@@ -765,8 +765,8 @@ h2:hover::before {
 }
 
 .experience-list > li {
-  margin-bottom: 1.05rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.4rem;
   border-bottom: 1px solid var(--rule);
 }
 
@@ -788,7 +788,7 @@ h2:hover::before {
 .exp-role {
   font-size: 1rem;
   font-weight: 600;
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.3rem;
   color: var(--ink);
   transition: color 0.18s ease;
 }
@@ -798,7 +798,7 @@ h2:hover::before {
 }
 
 .exp-meta {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.65rem;
   font-size: 0.92rem;
   color: var(--ink-muted);
 }
@@ -812,7 +812,7 @@ h2:hover::before {
 }
 
 .exp-bullets li {
-  margin-bottom: 0.32rem;
+  margin-bottom: 0.5rem;
 }
 
 .exp-desc {
