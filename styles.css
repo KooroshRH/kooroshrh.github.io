@@ -466,6 +466,7 @@ h2:hover::before {
 
 .news-feed > li.news-milestone {
   border-left-color: var(--accent);
+  background: linear-gradient(90deg, var(--gradient-accent), transparent 50%);
 }
 
 .news-milestone .news-date {
