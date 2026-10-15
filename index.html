@@ -47,7 +47,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261015c" />
+    <link rel="stylesheet" href="styles.css?v=20261015d" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -112,7 +112,11 @@
           </figure>
           <div class="hero-identity">
             <h1>Koorosh Roohi</h1>
-            <p class="tagline">From clinical sensing to generative vision.</p>
+            <ul class="hero-keywords" aria-label="Research keywords">
+              <li>Diffusion models</li>
+              <li>Image generation</li>
+              <li>Multi-modal sensing</li>
+            </ul>
           </div>
           <div class="hero-meta">
             <p class="title-line">Ph.D. candidate, University of Toronto</p>
@@ -167,7 +171,7 @@
                 </a>
               </li>
             </ul>
-            <a class="cv-pill" href="assets/cv.pdf?v=20260610">Curriculum vitæ (PDF)</a>
+            <a class="cv-pill" href="assets/cv.pdf?v=20261015">Curriculum vitæ (PDF)</a>
           </div>
             </div>
           </header>
@@ -175,21 +179,27 @@
           <section id="research" aria-labelledby="research-heading">
             <h2 id="research-heading">Interests</h2>
             <p class="lede">
-              I work with
+              My recent work is on diffusion transformers for image generation. I build training-free methods that
+              let pretrained models generate images well beyond their training resolution
+              (<a href="#pub-sega">SEGA</a>, <a href="#pub-area">AReA</a>) and turn them into arbitrary-resolution
+              photomosaics (<a href="#pub-photoquilt">PhotoQuilt</a>).
+            </p>
+            <p class="lede">
+              My Ph.D. work with
               <a href="https://scholar.google.com/citations?user=E8ShxykAAAAJ&amp;hl=en">Atena Roshan Fekr</a>
               and
               <a href="https://bme.utoronto.ca/faculty-research/core-faculty/alex-mihailidis/">Alex Mihailidis</a>
-              at the University of Toronto on machine learning for perception. My research follows two threads. In
-              healthcare, I build systems for activity recognition and indoor localization from mmWave radar, RGB-D
-              cameras, and wearable sensors, aimed at reducing infection risk in hospitals. In generative modeling, I
-              work on diffusion transformers, with a focus on high-resolution and training-free image generation.
+              at the University of Toronto uses mmWave radar, RGB-D cameras, and wearable sensors to recognize
+              caregiver activities and reduce infection risk in hospitals.
             </p>
             <ul class="interests">
+              <li>Diffusion models</li>
+              <li>High-resolution generation</li>
+              <li>Efficient attention</li>
+              <li>Vision-language models</li>
               <li>Multi-modal sensing</li>
               <li>Activity recognition</li>
               <li>Indoor localization</li>
-              <li>Generative models</li>
-              <li>Vision-language models</li>
               <li>Healthcare ML</li>
             </ul>
           </section>
@@ -199,7 +209,7 @@
           <main>
             <section id="news" aria-labelledby="news-heading">
           <h2 id="news-heading">News</h2>
-          <ul class="news-feed">
+          <ul class="news-feed" data-collapse="7">
             <li class="news-milestone news-toptier">
               <time class="news-date" datetime="2026-10">Oct 2026</time>
               <p class="news-line">
@@ -276,7 +286,7 @@
               >Google Scholar <span aria-hidden="true">↗</span></a
             >
           </div>
-          <ol class="pub-list">
+          <ol class="pub-list" data-collapse="5">
             <li class="pub pub--toptier pub--thumb" id="pub-sega">
               <span class="pub-venue">NeurIPS 2026</span>
               <a class="pub-thumb" href="https://rajabi2001.github.io/sega/" tabindex="-1" aria-hidden="true">
@@ -329,7 +339,7 @@
                   >
                   <a href="photo-quilt/">project</a>
                   <a href="https://github.com/KooroshRH/PhotoQuilt">code</a>
-                  <a href="https://huggingface.co/spaces/kooroshrh/PhotoQuilt">demo</a>
+                  <a href="https://huggingface.co/spaces/kooroshrh/PhotoQuilt"><img class="pub-link-icon" src="assets/hf-logo.svg" alt="" width="11" height="11" />demo</a>
                 </p>
               </div>
             </li>
@@ -353,7 +363,7 @@
                   <a href="https://arxiv.org/abs/2610.17227">arXiv</a>
                   <a href="https://rajabi2001.github.io/area/">project</a>
                   <a href="https://github.com/KooroshRH/AReA">code</a>
-                  <a href="https://huggingface.co/spaces/kooroshrh/AReA">demo</a>
+                  <a href="https://huggingface.co/spaces/kooroshrh/AReA"><img class="pub-link-icon" src="assets/hf-logo.svg" alt="" width="11" height="11" />demo</a>
                 </p>
               </div>
             </li>
@@ -518,6 +528,28 @@
     </div>
     <script>
       document.getElementById("y").textContent = new Date().getFullYear();
+
+      // Long lists show their first N items; a toggle under each list reveals the rest.
+      document.querySelectorAll("[data-collapse]").forEach((list) => {
+        const extra = [...list.children].slice(Number(list.dataset.collapse));
+        if (!extra.length) return;
+        extra.forEach((li) => li.classList.add("is-extra"));
+        list.classList.add("is-collapsed");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "list-toggle";
+        btn.setAttribute("aria-expanded", "false");
+        const label = () =>
+          list.classList.contains("is-collapsed") ? `Show ${extra.length} more` : "Show less";
+        btn.textContent = label();
+        btn.addEventListener("click", () => {
+          const collapsed = list.classList.toggle("is-collapsed");
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.textContent = label();
+          if (collapsed) list.scrollIntoView({ block: "nearest" });
+        });
+        list.after(btn);
+      });
       // Teaser videos load and play only once scrolled into view; reduced-motion keeps the poster.
       const teaserVideos = document.querySelectorAll(".pub-thumb video[data-src]");
       if (

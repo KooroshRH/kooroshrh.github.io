@@ -269,15 +269,16 @@ header.site {
   border-radius: 1px;
 }
 
-.tagline {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.18rem;
-  font-style: italic;
-  font-weight: 500;
-  color: var(--ink-muted);
+.hero-keywords {
   margin: 0;
-  line-height: 1.38;
-  max-width: 26em;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.75;
+  color: var(--ink-muted);
 }
 
 .hero-meta {
@@ -563,6 +564,47 @@ h2:hover::before {
   list-style: none;
 }
 
+.is-collapsed > .is-extra {
+  display: none;
+}
+
+.pub-link-icon {
+  display: block;
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+.list-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding: 0.18rem 0.55rem;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ink-muted);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--pill-bg);
+  cursor: pointer;
+}
+
+.list-toggle::after {
+  content: "\25BE";
+}
+
+.list-toggle[aria-expanded="true"]::after {
+  content: "\25B4";
+}
+
+.list-toggle:hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--rule));
+}
+
 .pub {
   display: grid;
   grid-template-columns: 6.4rem minmax(0, 1fr);
@@ -728,6 +770,7 @@ h2:hover::before {
 .pub-links a {
   display: inline-flex;
   align-items: center;
+  gap: 0.3rem;
   padding: 0.1rem 0.4rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -1041,11 +1084,6 @@ footer.site {
     width: 2.4rem;
   }
 
-  .sidebar .tagline {
-    font-size: 1.08rem;
-    max-width: none;
-  }
-
   .content {
     min-width: 0;
   }
@@ -1088,9 +1126,8 @@ footer.site {
     margin-right: auto;
   }
 
-  .tagline {
-    margin-left: auto;
-    margin-right: auto;
+  .hero-keywords {
+    text-align: center;
   }
 
   .contact-email {
