@@ -11,6 +11,9 @@
   --font-serif: "Lora", Georgia, serif;
   --font-sans: "Source Sans 3", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --toptier-from: #7fa6ff;
+  --toptier-to: #b394ff;
+  --toptier-ink: #15141f;
 }
 
 *,
@@ -259,6 +262,21 @@ a:hover {
   line-height: 1.45;
   letter-spacing: 0.01em;
   color: var(--ink-muted);
+}
+
+.title-header .venue-tag {
+  display: inline-block;
+  margin: 0.85rem 0 0;
+  padding: 0.22rem 0.6rem 0.18rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  color: var(--toptier-ink);
+  border-radius: 2px;
+  background: linear-gradient(120deg, var(--toptier-from), var(--toptier-to));
+  box-shadow: 0 0.2rem 0.7rem -0.25rem var(--toptier-to);
 }
 
 .meta {
