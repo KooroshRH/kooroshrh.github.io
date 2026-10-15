@@ -47,7 +47,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261006d" />
+    <link rel="stylesheet" href="styles.css?v=20261015a" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -335,7 +335,7 @@
             <li class="pub pub--thumb" id="pub-area">
               <span class="pub-venue pub-venue--muted">Preprint 2026</span>
               <a class="pub-thumb" href="https://rajabi2001.github.io/area/" tabindex="-1" aria-hidden="true">
-                <img src="assets/pubs/area-teaser.jpg" alt="AReA teaser: high-resolution samples across FLUX.1, Qwen-Image, FLUX.2 and Ideogram 4" width="520" height="347" loading="lazy" decoding="async" />
+                <video src="assets/pubs/area-teaser.mp4" poster="assets/pubs/area-teaser.jpg" width="480" height="320" autoplay muted loop playsinline preload="metadata" aria-label="AReA teaser: zooming into high-resolution samples from FLUX.1, Qwen-Image, FLUX.2 and Ideogram 4"></video>
               </a>
               <div class="pub-body">
                 <cite class="pub-title"
@@ -517,6 +517,12 @@
     </div>
     <script>
       document.getElementById("y").textContent = new Date().getFullYear();
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.querySelectorAll(".pub-thumb video").forEach((v) => {
+          v.removeAttribute("autoplay");
+          v.pause();
+        });
+      }
     </script>
   </body>
 </html>
