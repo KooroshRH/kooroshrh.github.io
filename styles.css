@@ -643,7 +643,8 @@ h2:hover::before {
     box-shadow 0.2s ease;
 }
 
-.pub-thumb img {
+.pub-thumb img,
+.pub-thumb video {
   display: block;
   width: 100%;
   height: auto;
