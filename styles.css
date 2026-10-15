@@ -833,207 +833,165 @@ h2:hover::before {
   color: var(--ink-faint);
 }
 
-.experience-list {
+.exp-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.experience-list > li {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.4rem;
-  border-bottom: 1px solid var(--rule);
+.exp-card {
+  padding: 0.8rem 0.9rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--rule);
+  border-radius: 3px;
+  background: var(--pill-bg);
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease;
 }
 
-.experience-list > li:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
+.exp-card--current {
+  border-top-color: var(--accent-teal);
 }
 
-.exp-when {
-  float: right;
+.exp-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--pill-hover-border);
+}
+
+.exp-card-when {
+  margin: 0 0 0.45rem;
   font-family: var(--font-mono);
-  font-size: 0.76rem;
-  color: var(--accent-teal);
+  font-size: 0.66rem;
   letter-spacing: 0.04em;
-  margin-left: 1rem;
+  color: var(--accent-teal);
 }
 
-.exp-role {
-  font-size: 1rem;
+.exp-card-role {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.08rem;
   font-weight: 600;
-  margin: 0 0 0.3rem;
+  line-height: 1.2;
   color: var(--ink);
-  transition: color 0.18s ease;
 }
 
-.experience-list > li:hover .exp-role {
-  color: var(--accent);
-}
-
-.exp-meta {
-  margin: 0 0 0.65rem;
-  font-size: 0.92rem;
-  color: var(--ink-muted);
-}
-
-.exp-bullets {
-  margin: 0;
-  padding-left: 1.15rem;
-  font-size: 0.94rem;
-  color: var(--ink-muted);
-  line-height: 1.5;
-}
-
-.exp-bullets li {
-  margin-bottom: 0.5rem;
-}
-
-.exp-desc {
-  margin: 0;
-  font-size: 0.94rem;
-  color: var(--ink-muted);
-  line-height: 1.5;
-}
-
-.glance {
-  border-top: 1px solid var(--rule);
-  padding-top: 1.75rem;
-}
-
-@supports (color: color-mix(in srgb, white, black)) {
-  .glance {
-    border-top-color: color-mix(in srgb, var(--rule) 88%, var(--accent) 10%);
-  }
-}
-
-.glance h3 {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+.exp-card-org {
+  margin: 0.15rem 0 0.5rem;
+  font-size: 0.86rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  color: var(--ink-venue);
+}
+
+.exp-card-desc {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.edu-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.edu-timeline > li {
+  display: grid;
+  grid-template-columns: 6.4rem minmax(0, 1fr);
+  gap: 0.2rem 1rem;
+  padding: 0.6rem 0 0.6rem 0.85rem;
+  border-left: 2px solid var(--news-edge-default);
+}
+
+.edu-when {
+  padding-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--accent-teal);
+}
+
+.edu-degree {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.edu-school {
+  margin: 0.1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-venue);
+}
+
+.edu-note {
+  margin-left: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+
+.edu-thesis {
+  margin: 0.3rem 0 0;
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 2rem;
+}
+
+.duo-label {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-teal);
-  margin: 1.35rem 0 0.4rem;
 }
 
-.glance h3:first-child {
-  margin-top: 0;
-}
-
-.glance p {
+.duo-list {
   margin: 0;
-  font-size: 0.98rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+  line-height: 1.7;
   color: var(--ink-muted);
-  line-height: 1.55;
-}
-
-.glance-subhead {
-  margin: 0.65rem 0 0.35rem;
-  font-size: 0.88rem;
-  color: var(--ink-muted);
-}
-
-.glance-list {
-  margin: 0 0 0.15rem;
-  padding-left: 1.15rem;
-  font-size: 0.98rem;
-  color: var(--ink-muted);
-  line-height: 1.55;
-}
-
-.glance-list li {
-  margin-bottom: 0.35rem;
-}
-
-.glance-list li:last-child {
-  margin-bottom: 0;
-}
-
-.glance-list li::marker {
-  color: var(--accent-teal);
 }
 
 .course-code {
+  margin-right: 0.4rem;
   font-family: var(--font-mono);
-  font-size: 0.88em;
+  font-size: 0.86em;
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink);
 }
 
-.glance-edu li {
-  margin-bottom: 0.85rem;
-}
+@media (max-width: 720px) {
+  .exp-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.glance-edu .edu-degree {
-  font-weight: 500;
-  color: var(--ink);
-}
+  .edu-timeline > li {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.glance-edu .edu-institution {
-  color: color-mix(in srgb, var(--ink-muted) 72%, var(--ink) 28%);
-}
-
-.glance-edu .edu-period {
-  font-family: var(--font-mono);
-  font-size: 0.82em;
-  letter-spacing: 0.03em;
-  color: color-mix(in srgb, var(--ink-muted) 88%, var(--accent-teal) 12%);
-}
-
-.glance-edu .edu-period::before {
-  content: "·";
-  margin: 0 0.35em;
-  color: var(--rule);
-}
-
-.glance-edu .edu-note::before {
-  content: "(";
-  color: var(--rule);
-}
-
-.glance-edu .edu-note::after {
-  content: ")";
-  color: var(--rule);
-}
-
-.glance-edu .edu-note {
-  font-size: 0.94em;
-  color: color-mix(in srgb, var(--ink-muted) 92%, var(--ink) 8%);
-}
-
-.glance-edu .edu-detail {
-  display: block;
-  margin-top: 0.4rem;
-  padding-left: 0.55rem;
-  border-left: 1px solid color-mix(in srgb, var(--rule) 75%, var(--accent-teal) 25%);
-  font-size: 0.94em;
-  line-height: 1.5;
-  color: color-mix(in srgb, var(--ink-muted) 96%, var(--ink) 4%);
-}
-
-.glance-edu .edu-label {
-  font-family: var(--font-mono);
-  font-size: 0.78em;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--ink-muted) 70%, var(--accent-teal) 30%);
-}
-
-.glance-edu .edu-label::after {
-  content: " —";
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: normal;
-  text-transform: none;
-  color: var(--rule);
-}
-
-.glance + .glance {
-  margin-top: 2.1rem;
+  .duo {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 footer.site {
@@ -1205,21 +1163,11 @@ footer.site {
     order: 1;
     margin-top: 0.4rem;
   }
-
-  .exp-when {
-    float: none;
-    display: block;
-    margin: 0 0 0.35rem;
-  }
 }
 
 @supports not (color: color-mix(in srgb, white, black)) {
   header.site {
     border-bottom-color: var(--rule);
-  }
-
-  .glance {
-    border-top-color: var(--rule);
   }
 }
 

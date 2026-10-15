@@ -47,7 +47,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261016b" />
+    <link rel="stylesheet" href="styles.css?v=20261016c" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -196,16 +196,6 @@
               at the University of Toronto uses mmWave radar, RGB-D cameras, and wearable sensors to recognize
               caregiver activities and reduce infection risk in hospitals.
             </p>
-            <ul class="interests">
-              <li>Diffusion models</li>
-              <li>High-resolution generation</li>
-              <li>Efficient attention</li>
-              <li>Vision-language models</li>
-              <li>Multi-modal sensing</li>
-              <li>Activity recognition</li>
-              <li>Indoor localization</li>
-              <li>Healthcare ML</li>
-            </ul>
           </section>
         </aside>
 
@@ -440,87 +430,89 @@
 
         <section id="experience" aria-labelledby="exp-heading">
           <h2 id="exp-heading">Experience</h2>
-          <ul class="experience-list">
-            <li>
-              <span class="exp-when">2023 — 2026</span>
-              <h3 class="exp-role">AI Manager · Masterly Inc., Toronto</h3>
-              <p class="exp-meta">AI products for organizations; cloud deployment on AWS.</p>
-              <ul class="exp-bullets">
-                <li>
-                  Led end-to-end development of Masterly Forms, a collaborative platform with AI-assisted form design
-                  and completion.
-                </li>
-                <li>
-                  Built Masterly Earendel, a vision–language-model-based video analysis pipeline for event detection and
-                  alerting in an agentic architecture.
-                </li>
-                <li>
-                  Led development of Masterly FinSuite, an LLM-driven financial portal for reporting automation and
-                  decision support.
-                </li>
-                <li>
-                  Built production infrastructure on AWS (SageMaker, Bedrock, Lambda, EC2); supervised a team of five
-                  developers and shipped modules in PyTorch and .NET.
-                </li>
-              </ul>
+          <ol class="exp-cards" data-collapse="3">
+            <li class="exp-card exp-card--current">
+              <p class="exp-card-when">Mar 2026 – Present</p>
+              <h3 class="exp-card-role">Faculty Affiliate Researcher</h3>
+              <p class="exp-card-org">Vector Institute</p>
+              <p class="exp-card-desc">Training-free, high-resolution inference for text-to-image diffusion models.</p>
             </li>
-            <li>
-              <span class="exp-when">2022</span>
-              <h3 class="exp-role">Computer Vision Engineer · Crouse Company, R&amp;D, Tehran</h3>
-              <p class="exp-meta">Quality inspection for automotive displays.</p>
-              <p class="exp-desc">
-                OpenCV-based defect-detection pipeline; Isolation Forest and Tesseract OCR for pixel-level anomaly
-                screening.
-              </p>
+            <li class="exp-card">
+              <p class="exp-card-when">Nov 2023 – Sep 2026</p>
+              <h3 class="exp-card-role">AI Manager</h3>
+              <p class="exp-card-org">Masterly Inc.</p>
+              <p class="exp-card-desc">Led a five-person team shipping VLM and LLM agent products on AWS.</p>
             </li>
-            <li>
-              <span class="exp-when">2019 — 2022</span>
-              <h3 class="exp-role">Client Developer · Quiz of Kings Studio, Tehran</h3>
-              <p class="exp-meta">Unity client for a large-scale mobile title.</p>
-              <p class="exp-desc">Client-side feature work and migration of legacy code from Corona to Unity.</p>
+            <li class="exp-card exp-card--current">
+              <p class="exp-card-when">Apr 2023 – Present</p>
+              <h3 class="exp-card-role">Graduate Research Assistant</h3>
+              <p class="exp-card-org">University of Toronto</p>
+              <p class="exp-card-desc">Multi-modal sensing and deep learning for infection-risk estimation.</p>
             </li>
-          </ul>
+            <li class="exp-card">
+              <p class="exp-card-when">Dec 2021 – Mar 2023</p>
+              <h3 class="exp-card-role">Research Assistant</h3>
+              <p class="exp-card-org">Amirkabir University of Technology</p>
+              <p class="exp-card-desc">Gait-based person re-identification and multi-object tracking.</p>
+            </li>
+            <li class="exp-card">
+              <p class="exp-card-when">2022</p>
+              <h3 class="exp-card-role">Computer Vision Engineer</h3>
+              <p class="exp-card-org">Crouse Company</p>
+              <p class="exp-card-desc">Defect detection for automotive displays with OpenCV and OCR.</p>
+            </li>
+            <li class="exp-card">
+              <p class="exp-card-when">2019 – 2022</p>
+              <h3 class="exp-card-role">Client Developer</h3>
+              <p class="exp-card-org">Quiz of Kings Studio</p>
+              <p class="exp-card-desc">Unity client features for a large-scale mobile game.</p>
+            </li>
+          </ol>
         </section>
 
-        <section class="glance" id="background" aria-labelledby="bg-heading">
-          <h2 id="bg-heading">Background</h2>
-          <h3>Education</h3>
-          <ul class="glance-list glance-edu">
+        <section id="education" aria-labelledby="edu-heading">
+          <h2 id="edu-heading">Education</h2>
+          <ol class="edu-timeline">
             <li>
-              <span class="edu-degree">Ph.D. candidate</span>,
-              <span class="edu-field">Biomedical Engineering</span>,
-              <span class="edu-institution">University of Toronto</span>
-              <span class="edu-period">2023 onward · expected 2028</span>
-              <span class="edu-detail">
-                <span class="edu-label">Dissertation</span> learning and multi-modal sensing in clinical settings,
-                including 3D data, sequential modeling, and system integration.
-              </span>
+              <span class="edu-when">2023 – 2027</span>
+              <div>
+                <h3 class="edu-degree">Ph.D., Biomedical Engineering</h3>
+                <p class="edu-school">University of Toronto <span class="edu-note">expected Aug 2027</span></p>
+                <p class="edu-thesis">
+                  Thesis: Infection risk estimation via multi-modal sensing and deep learning in healthcare
+                </p>
+              </div>
             </li>
             <li>
-              <span class="edu-degree">B.Sc.</span>, <span class="edu-field">Computer Engineering</span>,
-              <span class="edu-institution">Amirkabir University of Technology</span>
-              <span class="edu-note">Tehran Polytechnic</span>
-              <span class="edu-period">2023</span>
+              <span class="edu-when">2018 – 2023</span>
+              <div>
+                <h3 class="edu-degree">B.Sc., Computer Engineering</h3>
+                <p class="edu-school">Amirkabir University of Technology (Tehran Polytechnic)</p>
+              </div>
             </li>
-          </ul>
-          <h3>Teaching</h3>
-          <p class="glance-subhead">University of Toronto · Department of Computer Science (tutorial and lab TA)</p>
-          <ul class="glance-list">
-            <li><span class="course-code">CSC 209</span> — System Programming</li>
-            <li><span class="course-code">CSC 385</span> — Microprocessor Systems</li>
-            <li><span class="course-code">CSC 207</span> — Software Design</li>
-          </ul>
-            </section>
+          </ol>
+        </section>
 
-        <section class="glance" id="service" aria-labelledby="service-heading">
-          <h2 id="service-heading">Service</h2>
-          <h3>Conference reviewer</h3>
-          <ul class="glance-list">
-            <li>ICLR 2027</li>
-            <li>WACV 2027</li>
-            <li>NeurIPS 2026</li>
-            <li>ICML 2026</li>
-          </ul>
+        <section id="service" aria-labelledby="service-heading">
+          <h2 id="service-heading">Teaching &amp; service</h2>
+          <div class="duo">
+            <div>
+              <h3 class="duo-label">Teaching assistant · U of T</h3>
+              <ul class="duo-list">
+                <li><span class="course-code">CSC 209</span> System Programming</li>
+                <li><span class="course-code">CSC 385</span> Microprocessor Systems</li>
+                <li><span class="course-code">CSC 207</span> Software Design</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="duo-label">Reviewer</h3>
+              <ul class="duo-list">
+                <li>ICLR 2027 · WACV 2027</li>
+                <li>NeurIPS 2026 · ICML 2026</li>
+                <li><em>Circuits, Systems, and Signal Processing</em></li>
+              </ul>
+            </div>
+          </div>
         </section>
           </main>
 
