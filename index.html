@@ -335,7 +335,7 @@
             <li class="pub pub--thumb" id="pub-area">
               <span class="pub-venue pub-venue--muted">Preprint 2026</span>
               <a class="pub-thumb" href="https://rajabi2001.github.io/area/" tabindex="-1" aria-hidden="true">
-                <video src="assets/pubs/area-teaser.mp4" poster="assets/pubs/area-teaser.jpg" width="480" height="320" autoplay muted loop playsinline preload="metadata" aria-label="AReA teaser: zooming into high-resolution samples from FLUX.1, Qwen-Image, FLUX.2 and Ideogram 4"></video>
+                <video data-src="assets/pubs/area-teaser.mp4" poster="assets/pubs/area-teaser.jpg" width="1504" height="1200" muted loop playsinline preload="none" aria-label="AReA teaser: zooming into high-resolution samples from FLUX.1, Qwen-Image, FLUX.2 and Ideogram 4"></video>
               </a>
               <div class="pub-body">
                 <cite class="pub-title"
@@ -517,11 +517,27 @@
     </div>
     <script>
       document.getElementById("y").textContent = new Date().getFullYear();
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.querySelectorAll(".pub-thumb video").forEach((v) => {
-          v.removeAttribute("autoplay");
-          v.pause();
-        });
+      // Teaser videos load and play only once scrolled into view; reduced-motion keeps the poster.
+      const teaserVideos = document.querySelectorAll(".pub-thumb video[data-src]");
+      if (
+        teaserVideos.length &&
+        "IntersectionObserver" in window &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach(({ isIntersecting, target: v }) => {
+              if (isIntersecting) {
+                if (!v.src) v.src = v.dataset.src;
+                v.play().catch(() => {});
+              } else if (v.src) {
+                v.pause();
+              }
+            });
+          },
+          { rootMargin: "200px" }
+        );
+        teaserVideos.forEach((v) => io.observe(v));
       }
     </script>
   </body>
