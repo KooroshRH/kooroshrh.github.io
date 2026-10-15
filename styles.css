@@ -350,13 +350,30 @@ header.site {
   height: 1.05rem;
 }
 
-/* Single-colour Hugging Face mark, tinted with currentColor like the inline SVG icons. */
 .icon--hf {
-  display: block;
-  background: currentColor;
-  -webkit-mask: url("assets/hf-mono.svg") center / contain no-repeat;
-  mask: url("assets/hf-mono.svg") center / contain no-repeat;
   transform: scale(1.2);
+}
+
+/* Brand colours; GitHub and X use the page ink so they flip with the theme. */
+.social-icons a[aria-label="GitHub"],
+.social-icons a[aria-label="X"] {
+  color: var(--ink);
+}
+
+.social-icons a[aria-label="LinkedIn"] {
+  color: #0a66c2;
+}
+
+.social-icons a[aria-label="Google Scholar"] {
+  color: #4285f4;
+}
+
+[data-theme="dark"] .social-icons a[aria-label="LinkedIn"] {
+  color: #4f9ce6;
+}
+
+[data-theme="dark"] .social-icons a[aria-label="Google Scholar"] {
+  color: #78a6f8;
 }
 
 .cv-pill {
