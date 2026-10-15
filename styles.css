@@ -350,6 +350,15 @@ header.site {
   height: 1.05rem;
 }
 
+/* Single-colour Hugging Face mark, tinted with currentColor like the inline SVG icons. */
+.icon--hf {
+  display: block;
+  background: currentColor;
+  -webkit-mask: url("assets/hf-mono.svg") center / contain no-repeat;
+  mask: url("assets/hf-mono.svg") center / contain no-repeat;
+  transform: scale(1.2);
+}
+
 .cv-pill {
   display: inline-block;
   margin-top: 0.85rem;
