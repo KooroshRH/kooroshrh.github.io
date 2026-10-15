@@ -652,9 +652,9 @@ h2:hover::before {
   object-fit: cover;
 }
 
-/* Show teaser videos whole: fit to the thumbnail's height rather than cropping. */
+/* Teaser videos keep their own shape so they show whole, without cropping or bars. */
 .pub-thumb video {
-  object-fit: contain;
+  aspect-ratio: 1504 / 1200;
 }
 
 .pub-thumb:hover {
