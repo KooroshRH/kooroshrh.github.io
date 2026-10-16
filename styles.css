@@ -886,6 +886,11 @@ h2:hover::before {
   color: var(--ink-venue);
 }
 
+.exp-card-city {
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
 .exp-card-desc {
   margin: 0;
   font-size: 0.84rem;
