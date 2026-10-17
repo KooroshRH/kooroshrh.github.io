@@ -1,0 +1,78 @@
+name: Sync CV
+
+# Replaces assets/cv.pdf with resume-industry.pdf from the "latest" release of
+# KooroshRH/Resume (a private repo), and commits it if it changed.
+# - The Resume repo's "Build PDFs" workflow triggers this right after it publishes a release.
+# - A daily run catches anything that was missed.
+# - It can also be run by hand from the Actions tab ("Run workflow").
+# Needs the RESUME_TOKEN secret: a fine-grained token with read access to the Resume repo's contents.
+on:
+  repository_dispatch:
+    types: [resume-released]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: sync-cv
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for token
+        id: token
+        env:
+          RESUME_TOKEN: ${{ secrets.RESUME_TOKEN }}
+        run: |
+          if [ -z "$RESUME_TOKEN" ]; then
+            echo "::notice::RESUME_TOKEN secret is not set; skipping CV sync."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.token.outputs.ok == 'true'
+
+      - name: Download latest resume
+        if: steps.token.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RESUME_TOKEN }}
+        run: |
+          gh release download latest --repo KooroshRH/Resume \
+            --pattern resume-industry.pdf --output assets/cv.pdf --clobber
+          gh release view latest --repo KooroshRH/Resume \
+            --json targetCommitish --jq '.targetCommitish[0:7]' > "$RUNNER_TEMP/resume-sha"
+
+      - name: Commit if changed
+        if: steps.token.outputs.ok == 'true'
+        id: commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- assets/cv.pdf; then
+            echo "CV is already up to date."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          sha="$(cat "$RUNNER_TEMP/resume-sha")"
+          # Bump the cache-busting query on the CV link so visitors get the new file.
+          sed -i -E "s#assets/cv\.pdf\?v=[^\"]*#assets/cv.pdf?v=${sha}#" index.html
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/cv.pdf index.html
+          git commit -m "Update CV from KooroshRH/Resume@${sha}"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild GitHub Pages
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || echo "::warning::Could not request a Pages build; it will run on the next push."
