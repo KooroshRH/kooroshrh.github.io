@@ -15,7 +15,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
 
 concurrency:
   group: sync-cv
@@ -52,13 +51,9 @@ jobs:
 
       - name: Commit if changed
         if: steps.token.outputs.ok == 'true'
-        id: commit
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- assets/cv.pdf; then
             echo "CV is already up to date."
-            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           sha="$(cat "$RUNNER_TEMP/resume-sha")"
@@ -69,10 +64,3 @@ jobs:
           git add assets/cv.pdf index.html
           git commit -m "Update CV from KooroshRH/Resume@${sha}"
           git push
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-
-      - name: Rebuild GitHub Pages
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" || echo "::warning::Could not request a Pages build; it will run on the next push."
