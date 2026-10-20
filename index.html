@@ -42,12 +42,20 @@
           /* ignore */
         }
       })();
+      // The portrait plays a diffusion-sampling intro (assets/diffusion.js); hide it until that
+      // starts so it never flashes first. The timeout is a safety net if the script fails.
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("diffuse-pending");
+        setTimeout(function () {
+          document.documentElement.classList.remove("diffuse-pending");
+        }, 4000);
+      }
     </script>
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20261016d" />
+    <link rel="stylesheet" href="styles.css?v=20261020a" />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
@@ -513,6 +521,7 @@
         </div>
       </div>
     </div>
+    <script src="assets/diffusion.js?v=20261020"></script>
     <script>
       document.getElementById("y").textContent = new Date().getFullYear();
 
