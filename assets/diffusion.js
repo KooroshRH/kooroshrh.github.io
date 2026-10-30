@@ -15,9 +15,9 @@
   var W = 240;
   var H = 300;
   var N = W * H;
-  var STEPS = 50;
-  var FRAME_MS = 46;
-  var HOLD_MS = 220;
+  var STEPS = 40;
+  var FRAME_MS = 36;
+  var HOLD_MS = 120;
   var ETA = 0.4; // share of fresh noise per step (0 = deterministic DDIM, 1 = fully re-sampled)
   var SIGMAS = [0, 1.5, 3, 6, 12, 24]; // blur pyramid for x0_hat, in pixels
 
